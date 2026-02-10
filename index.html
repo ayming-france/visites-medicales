@@ -723,54 +723,62 @@
       font-size: 13px;
     }
 
-    /* ===== PROCESS TIMELINE (4 steps) ===== */
-    .process-timeline-4 {
+    /* ===== PROCESS TIMELINE ===== */
+    .process-timeline {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      gap: 25px;
+      gap: 40px;
       width: 100%;
-      max-width: 1100px;
+      max-width: 900px;
     }
 
-    .process-timeline-4 .process-step {
+    .process-step {
       text-align: center;
       flex: 1;
-      max-width: 220px;
+      max-width: 260px;
     }
 
-    .process-timeline-4 .step-number {
-      width: 70px;
-      height: 70px;
+    .step-number {
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: var(--gradient-brand-horizontal);
       color: white;
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
+      margin: 0 auto 24px;
       box-shadow: var(--shadow-md);
     }
 
-    .process-timeline-4 .step-title {
-      font-size: 17px;
+    .step-title {
+      font-size: 20px;
       font-weight: 600;
       color: var(--text-dark);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .process-timeline-4 .step-description {
-      font-size: 13px;
+    .step-duration {
+      font-size: 14px;
+      color: var(--blue-accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .step-description {
+      font-size: 14px;
       color: var(--text-gray);
       line-height: 1.6;
     }
 
-    .process-timeline-4 .step-arrow {
-      font-size: 20px;
+    .step-arrow {
+      font-size: 24px;
       color: var(--text-light);
-      margin-top: 25px;
+      margin-top: 30px;
+      flex-shrink: 0;
     }
 
     /* ===== REQUIREMENTS LIST ===== */
@@ -846,12 +854,6 @@
       gap: 36px;
       width: 100%;
       max-width: 1100px;
-    }
-
-    .faq-grid .faq-card:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
-      max-width: 530px;
-      justify-self: center;
     }
 
     .faq-card {
@@ -1268,7 +1270,6 @@
     .slide.active .faq-card:nth-child(2) { animation-delay: 0.2s; }
     .slide.active .faq-card:nth-child(3) { animation-delay: 0.3s; }
     .slide.active .faq-card:nth-child(4) { animation-delay: 0.4s; }
-    .slide.active .faq-card:nth-child(5) { animation-delay: 0.5s; }
 
     .slide.active .value-detail-list li {
       animation: fadeInUp 0.5s ease forwards;
@@ -1432,7 +1433,7 @@
           </p>
 
           <p class="content-paragraph">
-            <strong>Multiplication des types de visites et des &eacute;ch&eacute;ances</strong> : VIP dans les 3 mois, SIR &agrave; p&eacute;riodicit&eacute; renforc&eacute;e, visite de reprise sous 8 jours, visite de mi-carri&egrave;re entre 43 et 45 ans, visite post-exposition, rendez-vous de liaison. Chaque type a ses propres r&egrave;gles. Chaque site a son propre SPST. Et chaque SPST a ses propres d&eacute;lais et pratiques.
+            Les types de visites se multiplient &mdash; VIP, SIR, reprise, mi-carri&egrave;re, post-exposition, liaison &mdash; chacun avec <strong>ses propres r&egrave;gles et ses propres d&eacute;lais</strong>. Ajoutez plusieurs sites, plusieurs SPST, et personne ne sait plus o&ugrave; en est la conformit&eacute; globale.
           </p>
 
           <p class="content-paragraph highlight">
@@ -1688,7 +1689,7 @@
         </div>
 
         <div class="intro-content">
-          <p class="intro-pitch">Nous pilotons le suivi de vos visites m&eacute;dicales : planification unifi&eacute;e par risque, coordination multi-SPST centralis&eacute;e, et tra&ccedil;abilit&eacute; compl&egrave;te pour vous aider &agrave; maintenir la conformit&eacute; avec vos obligations l&eacute;gales.</p>
+          <p class="intro-pitch">Nous pilotons le suivi de vos visites m&eacute;dicales de bout en bout, de la planification par risque &agrave; la tra&ccedil;abilit&eacute; de chaque avis d'aptitude, en coordonnant tous vos SPST depuis une plateforme unique.</p>
         </div>
       </div>
     </section>
@@ -1941,20 +1942,20 @@
           <div class="testimonial-split-content">
             <div class="testimonial-split-rating">
               <span class="testimonial-split-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span class="testimonial-split-date">2024</span>
+              <span class="testimonial-split-date">Ao&ucirc;t 2024</span>
             </div>
             <p class="testimonial-split-quote">Je recommande Ayming pour la qualit&eacute; de service, le professionnalisme des &eacute;quipes, la disponibilit&eacute; et le suivi commercial.</p>
             <div class="testimonial-split-author">
               <span class="testimonial-split-name">Xavier BERHONDE</span>
               <span class="testimonial-split-position">Directeur QSE, EURALIS SOLUTIONS</span>
               <div class="testimonial-split-company-logo">
-                <img src="https://pbs.twimg.com/profile_images/942009430262145024/hppGHpbk_400x400.jpg" alt="EURALIS">
+                <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/hppGHpbk_400x400-e1759306442143-176x55.jpeg" alt="EURALIS">
               </div>
             </div>
             <a href="https://www.ayming.fr/temoignages-clients/lexternalisation-du-suivi-des-visites-medicales-chez-euralis/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-split-cta">Lire le t&eacute;moignage complet</a>
           </div>
           <div class="testimonial-split-image">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/05/Euralis-1436x808-1.jpg" alt="EURALIS - Externalisation des visites m&eacute;dicales">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2024/08/Euralis-1436-x-808-1.jpg" alt="EURALIS - Externalisation des visites m&eacute;dicales">
           </div>
         </div>
       </div>
@@ -2016,16 +2017,6 @@
             <p>Les avis sont archiv&eacute;s selon les normes RGPD et HDS. Seules les informations n&eacute;cessaires &agrave; la conformit&eacute; RH sont accessibles &agrave; vos &eacute;quipes. Certifications ISO 27001 et ISO 9001.</p>
           </div>
 
-          <div class="faq-card">
-            <h4>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                <polyline points="17 6 23 6 23 12"/>
-              </svg>
-              Peut-on suivre les indicateurs de performance ?
-            </h4>
-            <p>Nous fournissons un reporting p&eacute;riodique avec taux de visites effectu&eacute;es, replanifications, no-shows et respect des &eacute;ch&eacute;ances.</p>
-          </div>
         </div>
       </div>
 
@@ -2041,35 +2032,30 @@
           Comment d&eacute;marrer
         </h1>
 
-        <div class="process-timeline-4">
+        <div class="process-timeline">
           <div class="process-step">
             <div class="step-number">1</div>
             <div class="step-title">Diagnostic gratuit</div>
-            <div class="step-description">Analyse de votre situation actuelle : nombre de sites, SPST, volumes, taux de conformit&eacute; estim&eacute;</div>
+            <div class="step-duration">2 semaines</div>
+            <div class="step-description">Analyse de votre situation actuelle, nombre de sites, SPST, volumes et taux de conformit&eacute; estim&eacute;</div>
           </div>
 
           <span class="step-arrow">&rarr;</span>
 
           <div class="process-step">
             <div class="step-number">2</div>
-            <div class="step-title">Proposition d'accompagnement</div>
-            <div class="step-description">Plan personnalis&eacute; avec p&eacute;rim&egrave;tre, planning et tarification</div>
+            <div class="step-title">Proposition sur-mesure</div>
+            <div class="step-duration">+1 semaine</div>
+            <div class="step-description">Plan personnalis&eacute; avec p&eacute;rim&egrave;tre, planning et tarification adapt&eacute;s</div>
           </div>
 
           <span class="step-arrow">&rarr;</span>
 
           <div class="process-step">
             <div class="step-number">3</div>
-            <div class="step-title">Phase pilote</div>
-            <div class="step-description">D&eacute;marrage sur un p&eacute;rim&egrave;tre restreint (ex : une r&eacute;gion ou une filiale)</div>
-          </div>
-
-          <span class="step-arrow">&rarr;</span>
-
-          <div class="process-step">
-            <div class="step-number">4</div>
-            <div class="step-title">D&eacute;ploiement</div>
-            <div class="step-description">Extension progressive &agrave; l'ensemble du groupe</div>
+            <div class="step-title">D&eacute;ploiement progressif</div>
+            <div class="step-duration">Selon planning</div>
+            <div class="step-description">Pilote sur un p&eacute;rim&egrave;tre restreint, puis extension &agrave; l'ensemble du groupe</div>
           </div>
         </div>
       </div>
