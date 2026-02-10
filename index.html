@@ -2255,6 +2255,57 @@
     }
 
     updateSlide();
+
+    // ===== NUMBER COUNTER ANIMATION =====
+    const introductionSlideIndex = 5;
+    let countersAnimated = false;
+
+    function animateCounters() {
+      const statNumbers = document.querySelectorAll('.slide-introduction.active .intro-stat-number');
+      statNumbers.forEach(el => {
+        const text = el.textContent;
+        const match = text.match(/(\d[\d\s]*)/);
+        if (match) {
+          const target = parseInt(match[1].replace(/\s/g, ''));
+          const suffix = text.replace(match[1], '');
+          animateCounter(el, target, suffix);
+        }
+      });
+    }
+
+    function animateCounter(element, target, suffix, duration = 800) {
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = Math.floor(target * progress);
+        element.textContent = current.toLocaleString('fr-FR') + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    function checkCounterAnimation() {
+      if (currentSlide === introductionSlideIndex && !countersAnimated) {
+        setTimeout(() => {
+          animateCounters();
+          countersAnimated = true;
+        }, 600);
+      }
+      if (currentSlide !== introductionSlideIndex) {
+        countersAnimated = false;
+      }
+    }
+
+    const originalUpdateSlide = updateSlide;
+    updateSlide = function() {
+      originalUpdateSlide();
+      checkCounterAnimation();
+    };
   </script>
 
 </body>
