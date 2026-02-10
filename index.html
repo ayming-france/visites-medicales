@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Externalisation des visites médicales - Ayming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-primary: #11a9e6;
+      --blue-accent: #0da4e8;
+      --blue-dark: #00456d;
+      --gradient-blue-start: #0fa7e2;
+      --gradient-green-end: #0ab38c;
+      --gradient-brand-horizontal: linear-gradient(90deg, var(--gradient-blue-start), var(--gradient-green-end));
+      --text-dark: #0f172a;
+      --text-gray: #6b7280;
+      --text-light: #9ca3af;
+      --bg-white: #ffffff;
+      --bg-light: #f8fafc;
+      --bg-subtle: #eef2f6;
+      --overlay-blue-soft: rgba(17, 169, 230, 0.1);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+      --nav-width: 260px;
+      --nav-collapsed: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg-white);
+      color: var(--text-dark);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .chapter-nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--nav-width);
+      height: 100vh;
+      background: var(--bg-light);
+      border-right: 1px solid var(--bg-subtle);
+      padding: 40px 24px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--nav-width) + var(--nav-collapsed)));
+      transition: transform 0.3s ease;
+    }
+
+    .chapter-nav:hover,
+    .chapter-nav.open {
+      transform: translateX(0);
+    }
+
+    .nav-toggle {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+
+    .chapter-nav:hover .nav-toggle {
+      opacity: 0;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 12px;
+      height: 1.5px;
+      background: var(--text-gray);
+      border-radius: 1px;
+    }
+
+    .nav-header {
+      margin-bottom: 40px;
+      padding-right: 30px;
+    }
+
+    .nav-logo {
+      height: 32px;
+      margin-bottom: 8px;
+    }
+
+    .nav-logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    .nav-subtitle {
+      font-size: 11px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .nav-subtitle:hover {
+      color: var(--blue-accent);
+    }
+
+    .nav-section {
+      margin-bottom: 28px;
+    }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      padding-left: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 13px;
+      color: var(--text-gray);
+    }
+
+    .nav-item:hover {
+      background: var(--overlay-blue-soft);
+      color: var(--blue-primary);
+    }
+
+    .nav-item.active {
+      background: var(--blue-primary);
+      color: white;
+    }
+
+    .nav-item-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active .nav-item-number {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    /* ===== SLIDE COUNTER ===== */
+    .slide-counter {
+      position: fixed;
+      top: 30px;
+      right: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-gray);
+      z-index: 100;
+    }
+
+    .slide-counter .current {
+      color: var(--blue-accent);
+      font-weight: 600;
+    }
+
+    /* ===== PRESENTATION CONTAINER ===== */
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      transition: padding-left 0.3s ease;
+      padding-left: var(--nav-collapsed);
+    }
+
+    .chapter-nav:hover ~ .presentation,
+    .chapter-nav.open ~ .presentation {
+      padding-left: var(--nav-width);
+    }
+
+    /* ===== SLIDES ===== */
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 60px 80px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transform: scale(1.15);
+      transform-origin: center center;
+    }
+
+    /* ===== COVER SLIDE ===== */
+    .slide.cover {
+      padding: 0;
+    }
+
+    .cover-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      height: 100%;
+    }
+
+    .cover-left {
+      background: var(--gradient-brand-horizontal);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px;
+      position: relative;
+    }
+
+    .cover-logo {
+      position: absolute;
+      top: 50px;
+      left: 80px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cover-logo img {
+      height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    .cover-title {
+      font-size: 52px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.15;
+    }
+
+    .cover-subtitle {
+      font-size: 20px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 20px;
+      font-weight: 400;
+    }
+
+    .cover-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 150px;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gradient-green-end) 0%, transparent 100%);
+      z-index: 1;
+    }
+
+    .cover-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .slide-title {
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 50px;
+      text-align: center;
+      background: linear-gradient(90deg, var(--gradient-blue-start), var(--gradient-green-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-subtitle {
+      font-size: 18px;
+      color: var(--text-gray);
+      margin-bottom: 50px;
+      font-weight: 400;
+      max-width: 900px;
+      line-height: 1.7;
+    }
+
+    /* ===== LAYOUT: SPLIT ===== */
+    .layout-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      width: 100%;
+      max-width: 1200px;
+      align-items: center;
+    }
+
+    .layout-split .content-side {
+      text-align: left;
+    }
+
+    .layout-split .content-side .slide-title {
+      text-align: left;
+      margin-bottom: 35px;
+    }
+
+    .layout-split .visual-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== LAYOUT: 3 COLUMNS ===== */
+    .three-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .column-card {
+      text-align: center;
+    }
+
+    .column-card .card-image {
+      width: 100%;
+      height: 200px;
+      background: var(--bg-subtle);
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .column-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .column-card h3 {
+      font-size: 18px;
+      color: var(--blue-accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .column-card p {
+      font-size: 14px;
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    .column-card p strong {
+      color: var(--text-dark);
+    }
+
+    /* ===== PARAGRAPH STYLES ===== */
+    .content-paragraph {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-gray);
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .content-paragraph strong {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .content-paragraph.highlight {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--blue-dark);
+    }
+
+    /* ===== IMAGE CONTAINER ===== */
+    .image-container {
+      width: 100%;
+      max-width: 480px;
+      height: 360px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .floating-badge {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 12px 18px;
+      box-shadow: var(--shadow-md);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .floating-badge.top-right {
+      top: 20px;
+      right: -15px;
+    }
+
+    .floating-badge.bottom-left {
+      bottom: 25px;
+      left: -15px;
+    }
+
+    .floating-badge .badge-number {
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    .floating-badge svg {
+      width: 18px;
+      height: 18px;
+      color: var(--blue-accent);
+    }
+
+    /* ===== TABLE STYLES ===== */
+    .table-container {
+      width: 100%;
+      max-width: 1050px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .comparison-table th {
+      background: var(--blue-primary);
+      color: white;
+      padding: 20px 30px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .comparison-table th:first-child {
+      text-align: center;
+    }
+
+    .comparison-table th:nth-child(2),
+    .comparison-table th:nth-child(3) {
+      text-align: left;
+    }
+
+    .comparison-table td {
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--bg-subtle);
+      font-size: 14px;
+      background: var(--bg-white);
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: center;
+      vertical-align: middle;
+      background: var(--bg-light);
+    }
+
+    .comparison-table td:nth-child(2),
+    .comparison-table td:nth-child(3) {
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .comparison-table ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .comparison-table li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: var(--text-gray);
+    }
+
+    .comparison-table li:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-table li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue-accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ===== FEATURE GRID (4 items, 2x2) ===== */
+    .feature-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px 80px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--blue-primary);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feature-icon svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .feature-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .feature-content p {
+      font-size: 14px;
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    /* ===== VALUE DETAIL SLIDE ===== */
+    .value-detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      width: 100%;
+      max-width: 1150px;
+      align-items: center;
+      transform: scale(1.15);
+      transform-origin: center center;
+    }
+
+    .value-detail-content {
+      text-align: left;
+    }
+
+    .value-detail-content h2 {
+      font-size: 38px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--gradient-blue-start), var(--gradient-green-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+      line-height: 1.2;
+    }
+
+    .value-detail-list {
+      list-style: none;
+    }
+
+    .value-detail-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 17px;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .value-detail-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .value-detail-list .check-icon {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      color: var(--blue-accent);
+      margin-top: 2px;
+    }
+
+    .value-detail-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .value-image-container {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 0 60px 20px rgba(17, 169, 230, 0.25),
+        0 0 100px 40px rgba(10, 179, 140, 0.15),
+        0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .value-image-container img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ===== IDEAL WORLD CARDS ===== */
+    .ideal-card .card-image {
+      background: linear-gradient(135deg, #e0f4f8 0%, #e3f9ed 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ideal-card .card-image svg {
+      width: 65px;
+      height: 65px;
+      color: var(--blue-accent);
+    }
+
+    /* ===== LAYOUT: 4 COLUMNS ===== */
+    .four-columns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .four-columns .column-card .card-image {
+      height: 160px;
+    }
+
+    .four-columns .column-card h3 {
+      font-size: 15px;
+    }
+
+    .four-columns .column-card p {
+      font-size: 13px;
+    }
+
+    /* ===== PROCESS TIMELINE (4 steps) ===== */
+    .process-timeline-4 {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 25px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .process-timeline-4 .process-step {
+      text-align: center;
+      flex: 1;
+      max-width: 220px;
+    }
+
+    .process-timeline-4 .step-number {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--gradient-brand-horizontal);
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .process-timeline-4 .step-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .process-timeline-4 .step-description {
+      font-size: 13px;
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    .process-timeline-4 .step-arrow {
+      font-size: 20px;
+      color: var(--text-light);
+      margin-top: 25px;
+    }
+
+    /* ===== REQUIREMENTS LIST ===== */
+    .requirements-box {
+      background: var(--bg-light);
+      border-radius: 20px;
+      padding: 45px 55px;
+      border-left: 5px solid var(--blue-accent);
+      text-align: left;
+      width: 100%;
+      max-width: 750px;
+    }
+
+    .requirements-box h4 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 30px;
+    }
+
+    .requirements-box ul {
+      list-style: none;
+    }
+
+    .requirements-box li {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 0;
+      font-size: 17px;
+      color: var(--text-gray);
+      border-bottom: 1px solid var(--bg-subtle);
+    }
+
+    .requirements-box li:last-child {
+      border-bottom: none;
+    }
+
+    .requirements-box li .check-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gradient-brand-horizontal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .requirements-box li .check-icon svg {
+      width: 16px;
+      height: 16px;
+      color: white;
+    }
+
+    /* ===== COMPANY LOGO ===== */
+    .company-logo {
+      position: absolute;
+      bottom: 35px;
+      right: 50px;
+      height: 30px;
+    }
+
+    .company-logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    /* ===== FAQ CARDS ===== */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .faq-grid .faq-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 530px;
+      justify-self: center;
+    }
+
+    .faq-card {
+      background: var(--bg-white);
+      border-radius: 18px;
+      padding: 38px 44px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--bg-subtle);
+      text-align: left;
+    }
+
+    .faq-card h4 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--blue-accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .faq-card h4 svg {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .faq-card p {
+      font-size: 15px;
+      color: var(--text-gray);
+      line-height: 1.7;
+    }
+
+    /* ===== INTRODUCTION SLIDE - HERO LAYOUT ===== */
+    .slide-introduction {
+      padding: 0;
+    }
+
+    .slide-introduction .slide-inner {
+      transform: scale(1.0);
+      justify-content: flex-start;
+      padding-top: 0;
+      max-width: none;
+      width: 100%;
+    }
+
+    .intro-hero {
+      width: 100vw;
+      max-width: none;
+      height: 70vh;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .intro-hero-collage {
+      display: flex;
+      width: max-content;
+      height: 100%;
+      animation: scrollCarousel 45s linear infinite;
+    }
+
+    .intro-hero-collage img {
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    @keyframes scrollCarousel {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .intro-hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 61, 121, 0.25) 0%,
+        rgba(0, 0, 0, 0.05) 30%,
+        rgba(0, 0, 0, 0.05) 60%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+      pointer-events: none;
+    }
+
+    .intro-hero-logo {
+      position: absolute;
+      top: 30px; left: 40px; z-index: 3;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-hero-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .intro-title-band {
+      position: absolute;
+      bottom: 140px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px 60px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-offer-title {
+      font-size: 42px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      margin: 0;
+      background: linear-gradient(90deg, var(--gradient-blue-start), var(--gradient-green-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro-stats {
+      position: absolute;
+      bottom: 0; left: 0; right: 0; z-index: 2;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 28px 60px;
+    }
+
+    .intro-stat-card {
+      background: transparent;
+      padding: 16px 70px;
+      text-align: center;
+      border-right: 1px solid #e0e0e0;
+    }
+
+    .intro-stat-card:last-child {
+      border-right: none;
+    }
+
+    .intro-stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--blue-accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .intro-stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .intro-content {
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .intro-pitch {
+      font-size: 18px;
+      color: var(--text-dark);
+      line-height: 1.7;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* ===== TESTIMONIAL SPLIT (1 testimonial) ===== */
+    .testimonial-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      width: 100%;
+      max-width: 1100px;
+      align-items: center;
+    }
+
+    .testimonial-split-content {
+      text-align: left;
+    }
+
+    .testimonial-split-rating {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-split-stars {
+      color: #fbbf24;
+      font-size: 20px;
+      letter-spacing: 3px;
+    }
+
+    .testimonial-split-date {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-gray);
+    }
+
+    .testimonial-split-quote {
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--text-dark);
+      margin-bottom: 28px;
+      position: relative;
+      padding-left: 24px;
+      border-left: 4px solid var(--blue-accent);
+    }
+
+    .testimonial-split-author {
+      margin-bottom: 20px;
+    }
+
+    .testimonial-split-name {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .testimonial-split-position {
+      display: block;
+      font-size: 14px;
+      color: var(--text-gray);
+      margin-bottom: 12px;
+    }
+
+    .testimonial-split-company-logo {
+      margin-top: 20px;
+    }
+
+    .testimonial-split-company-logo img {
+      height: 36px;
+      opacity: 0.8;
+    }
+
+    .testimonial-split-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--blue-primary), var(--gradient-green-end));
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0,61,121,0.3);
+      transition: all 0.2s ease;
+    }
+
+    .testimonial-split-cta::after {
+      content: '\2192';
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .testimonial-split-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,61,121,0.4);
+    }
+
+    .testimonial-split-cta:hover::after {
+      transform: translateX(4px);
+    }
+
+    .testimonial-split-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .testimonial-split-image img {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 20px;
+      box-shadow:
+        0 0 60px 20px rgba(17, 169, 230, 0.25),
+        0 0 100px 40px rgba(10, 179, 140, 0.15),
+        0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== CTA BOX ===== */
+    .cta-box {
+      background: linear-gradient(90deg, #0fa7e2, #0ab38c);
+      border-radius: 12px;
+      padding: 24px 40px;
+      margin-top: 20px;
+    }
+
+    .cta-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+    }
+
+    /* ===== KEYBOARD HINT ===== */
+    .keyboard-hint {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 8px;
+      background: var(--bg-subtle);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      margin: 0 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .key:hover {
+      background: var(--blue-primary);
+      color: white;
+    }
+
+    .key:active {
+      transform: scale(0.95);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide.active .slide-title,
+    .slide.active .cover-title,
+    .slide.active .value-detail-content h2 {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .slide.active .slide-subtitle,
+    .slide.active .cover-subtitle {
+      animation: fadeInUp 0.5s ease 0.1s forwards;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .slide.active .content-paragraph {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .slide.active .content-paragraph:nth-child(2) { animation-delay: 0.1s; }
+    .slide.active .content-paragraph:nth-child(3) { animation-delay: 0.15s; }
+    .slide.active .content-paragraph:nth-child(4) { animation-delay: 0.2s; }
+
+    .slide.active .column-card,
+    .slide.active .stat-card,
+    .slide.active .faq-card,
+    .slide.active .feature-item,
+    .slide.active .process-step {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .slide.active .column-card:nth-child(1),
+    .slide.active .stat-card:nth-child(1),
+    .slide.active .feature-item:nth-child(1) { animation-delay: 0.15s; }
+    .slide.active .column-card:nth-child(2),
+    .slide.active .stat-card:nth-child(2),
+    .slide.active .feature-item:nth-child(2) { animation-delay: 0.25s; }
+    .slide.active .column-card:nth-child(3),
+    .slide.active .stat-card:nth-child(3),
+    .slide.active .feature-item:nth-child(3) { animation-delay: 0.35s; }
+    .slide.active .feature-item:nth-child(4) { animation-delay: 0.45s; }
+
+    /* Process steps */
+    .slide.active .process-step:nth-of-type(1) { animation-delay: 0.15s; }
+    .slide.active .process-step:nth-of-type(2) { animation-delay: 0.30s; }
+    .slide.active .process-step:nth-of-type(3) { animation-delay: 0.45s; }
+    .slide.active .process-step:nth-of-type(4) { animation-delay: 0.60s; }
+
+    .slide.active .faq-card:nth-child(1) { animation-delay: 0.1s; }
+    .slide.active .faq-card:nth-child(2) { animation-delay: 0.2s; }
+    .slide.active .faq-card:nth-child(3) { animation-delay: 0.3s; }
+    .slide.active .faq-card:nth-child(4) { animation-delay: 0.4s; }
+    .slide.active .faq-card:nth-child(5) { animation-delay: 0.5s; }
+
+    .slide.active .value-detail-list li {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .slide.active .value-detail-list li:nth-child(1) { animation-delay: 0.15s; }
+    .slide.active .value-detail-list li:nth-child(2) { animation-delay: 0.25s; }
+    .slide.active .value-detail-list li:nth-child(3) { animation-delay: 0.35s; }
+
+    .slide.active .requirements-box li {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+    .slide.active .requirements-box li:nth-child(1) { animation-delay: 0.15s; }
+    .slide.active .requirements-box li:nth-child(2) { animation-delay: 0.25s; }
+    .slide.active .requirements-box li:nth-child(3) { animation-delay: 0.35s; }
+    .slide.active .requirements-box li:nth-child(4) { animation-delay: 0.45s; }
+
+    @keyframes fadeInUpCentered {
+      from { opacity: 0; transform: translateX(-50%) translateY(25px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .slide-introduction.active .intro-hero-logo {
+      animation: fadeInUp 0.5s ease 0.1s forwards;
+      opacity: 0;
+    }
+    .slide-introduction.active .intro-title-band {
+      animation: fadeInUpCentered 0.6s ease 0.3s forwards;
+      opacity: 0;
+    }
+    .slide-introduction.active .intro-stat-card {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+    .slide-introduction.active .intro-stat-card:nth-child(1) { animation-delay: 0.5s; }
+    .slide-introduction.active .intro-stat-card:nth-child(2) { animation-delay: 0.65s; }
+    .slide-introduction.active .intro-stat-card:nth-child(3) { animation-delay: 0.8s; }
+    .slide-introduction.active .intro-pitch {
+      animation: fadeInUp 0.5s ease 1s forwards;
+      opacity: 0;
+    }
+
+    .slide.active .testimonial-split-content {
+      animation: fadeInUp 0.6s ease 0.2s forwards;
+      opacity: 0;
+    }
+    .slide.active .testimonial-split-image {
+      animation: fadeInUp 0.6s ease 0.4s forwards;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chapter Navigation -->
+  <nav class="chapter-nav">
+    <div class="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="nav-header">
+      <div class="nav-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+      <a class="nav-subtitle" href="https://www.ayming.fr/ressources-humaines/prevention-et-sante-au-travail/externaliser-visites-medicales/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales" target="_blank">Visites médicales</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Le march&eacute;</div>
+      <div class="nav-item active" data-slide="0">
+        <span class="nav-item-number">01</span>
+        Couverture
+      </div>
+      <div class="nav-item" data-slide="1">
+        <span class="nav-item-number">02</span>
+        Insight
+      </div>
+      <div class="nav-item" data-slide="2">
+        <span class="nav-item-number">03</span>
+        Alternatives
+      </div>
+      <div class="nav-item" data-slide="3">
+        <span class="nav-item-number">04</span>
+        Comparaison
+      </div>
+      <div class="nav-item" data-slide="4">
+        <span class="nav-item-number">05</span>
+        Monde id&eacute;al
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Notre solution</div>
+      <div class="nav-item" data-slide="5">
+        <span class="nav-item-number">06</span>
+        Introduction
+      </div>
+      <div class="nav-item" data-slide="6">
+        <span class="nav-item-number">07</span>
+        Valeur
+      </div>
+      <!-- Value detail slides (7-10) map to nav item 6 -->
+      <div class="nav-item" data-slide="11">
+        <span class="nav-item-number">08</span>
+        Preuves
+      </div>
+      <div class="nav-item" data-slide="12">
+        <span class="nav-item-number">09</span>
+        Questions
+      </div>
+      <div class="nav-item" data-slide="13">
+        <span class="nav-item-number">10</span>
+        Processus
+      </div>
+      <div class="nav-item" data-slide="14">
+        <span class="nav-item-number">11</span>
+        D&eacute;marrage
+      </div>
+    </div>
+  </nav>
+
+  <!-- Slide Counter -->
+  <div class="slide-counter"><span class="current">1</span>/15</div>
+
+  <!-- Presentation -->
+  <main class="presentation">
+
+    <!-- SLIDE 0: COVER -->
+    <section class="slide cover active" data-chapter="cover">
+      <div class="cover-layout">
+        <div class="cover-left">
+          <div class="cover-logo">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+          </div>
+          <h1 class="cover-title">
+            Externalisation des<br>visites m&eacute;dicales
+          </h1>
+          <p class="cover-subtitle">Pilotage centralis&eacute; du suivi de vos visites m&eacute;dicales : planification, coordination SPST et tra&ccedil;abilit&eacute; compl&egrave;te</p>
+        </div>
+        <div class="cover-right">
+          <img class="cover-image" src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Visites m&eacute;dicales">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 1: INSIGHT -->
+    <section class="slide" data-chapter="insight">
+      <div class="layout-split">
+        <div class="content-side">
+          <h1 class="slide-title">
+            La p&eacute;nurie de m&eacute;decins du travail<br>
+            change la donne
+          </h1>
+
+          <p class="content-paragraph">
+            La plupart des organisations comptent sur les SPST pour planifier les visites m&eacute;dicales de leurs salari&eacute;s. Mais avec <strong>21% de m&eacute;decins du travail en moins depuis 2010</strong> et un creux pr&eacute;vu en 2030, les d&eacute;lais de rendez-vous s'allongent et les &eacute;ch&eacute;ances l&eacute;gales sont de plus en plus difficiles &agrave; tenir. La responsabilit&eacute;, elle, reste enti&egrave;rement sur l'employeur.
+          </p>
+
+          <p class="content-paragraph">
+            <strong>Multiplication des types de visites et des &eacute;ch&eacute;ances</strong> : VIP dans les 3 mois, SIR &agrave; p&eacute;riodicit&eacute; renforc&eacute;e, visite de reprise sous 8 jours, visite de mi-carri&egrave;re entre 43 et 45 ans, visite post-exposition, rendez-vous de liaison. Chaque type a ses propres r&egrave;gles. Chaque site a son propre SPST. Et chaque SPST a ses propres d&eacute;lais et pratiques.
+          </p>
+
+          <p class="content-paragraph highlight">
+            Chez Ayming, nous croyons que le suivi des visites m&eacute;dicales ne peut plus reposer sur des tableaux Excel et des relances informelles quand le syst&egrave;me de sant&eacute; au travail est sous tension.
+          </p>
+        </div>
+
+        <div class="visual-side">
+          <div class="image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-problem.jpg" alt="D&eacute;fis du suivi des visites m&eacute;dicales">
+            <div class="floating-badge top-right">
+              <span class="badge-number">-21%</span> m&eacute;decins du travail
+            </div>
+            <div class="floating-badge bottom-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              1 500&euro;/salari&eacute; d'amende
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 2: ALTERNATIVES - Cards -->
+    <section class="slide" data-chapter="alternatives">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Comment les organisations g&egrave;rent<br>
+          les visites m&eacute;dicales aujourd'hui
+        </h1>
+
+        <div class="three-columns">
+          <div class="column-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=400&fit=crop" alt="Gestion manuelle RH">
+            </div>
+            <h3>Gestion manuelle par les RH</h3>
+            <p><strong>Contr&ocirc;le total, visibilit&eacute; z&eacute;ro.</strong> Tableaux Excel, emails et appels aux SPST. &Eacute;ch&eacute;ances oubli&eacute;es d&egrave;s que le volume d&eacute;passe la capacit&eacute;.</p>
+          </div>
+
+          <div class="column-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Module SIRH">
+            </div>
+            <h3>Module SIRH / GTA</h3>
+            <p><strong>Alert&eacute; mais pas pilot&eacute;.</strong> Le SIRH signale les &eacute;ch&eacute;ances mais ne prend pas les rendez-vous, ne relance pas les SPST, ne contr&ocirc;le pas les factures.</p>
+          </div>
+
+          <div class="column-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SPST">
+            </div>
+            <h3>Compter sur le SPST</h3>
+            <p><strong>D&eacute;l&eacute;gu&eacute; mais pas s&eacute;curis&eacute;.</strong> La responsabilit&eacute; l&eacute;gale reste sur l'employeur. P&eacute;nurie de m&eacute;decins = d&eacute;lais qui explosent sans visibilit&eacute;.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 3: ALTERNATIVES - Table -->
+    <section class="slide" data-chapter="alternatives">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Chaque approche a ses limites
+        </h1>
+
+        <div class="table-container">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">Approche</th>
+                <th style="width: 40%;">Avantages</th>
+                <th style="width: 40%;">Inconv&eacute;nients</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Gestion manuelle</td>
+                <td>
+                  <ul>
+                    <li>Pas de co&ucirc;t externe</li>
+                    <li>Relations directes avec le SPST local</li>
+                    <li>Connaissance des cas particuliers</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>&Eacute;ch&eacute;ances oubli&eacute;es quand le volume d&eacute;passe</li>
+                    <li>Pas de priorisation par type de visite</li>
+                    <li>Aucun reporting consolid&eacute; multi-sites</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Module SIRH</td>
+                <td>
+                  <ul>
+                    <li>Alertes automatiques sur les &eacute;ch&eacute;ances</li>
+                    <li>Centralisation des donn&eacute;es RH</li>
+                    <li>Int&eacute;gration avec l'&eacute;cosyst&egrave;me SI</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>Ne prend pas les rendez-vous</li>
+                    <li>Pas de contact op&eacute;rationnel avec les SPST</li>
+                    <li>Pas de contr&ocirc;le des factures SPST</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Compter sur le SPST</td>
+                <td>
+                  <ul>
+                    <li>Pas de charge suppl&eacute;mentaire pour les RH</li>
+                    <li>Le SPST conna&icirc;t les r&egrave;gles</li>
+                    <li>Pas de co&ucirc;t de gestion visible</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>Responsabilit&eacute; l&eacute;gale reste sur l'employeur</li>
+                    <li>P&eacute;nurie = d&eacute;lais qui explosent</li>
+                    <li>Z&eacute;ro coordination multi-sites</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 4: MONDE ID&Eacute;AL -->
+    <section class="slide" data-chapter="monde-ideal">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Ce que serait un suivi<br>
+          v&eacute;ritablement ma&icirc;tris&eacute;
+        </h1>
+
+        <div class="four-columns">
+          <div class="column-card ideal-card">
+            <div class="card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4"/>
+                <path d="M8 2v4"/>
+                <path d="M3 10h18"/>
+                <path d="M8 14h.01"/>
+                <path d="M12 14h.01"/>
+                <path d="M16 14h.01"/>
+                <path d="M8 18h.01"/>
+                <path d="M12 18h.01"/>
+              </svg>
+            </div>
+            <h3>Un planning unique pour tous les sites</h3>
+            <p>Toutes les &eacute;ch&eacute;ances par salari&eacute;, par type de visite et par site, consolid&eacute;es dans un seul tableau de bord</p>
+          </div>
+
+          <div class="column-card ideal-card">
+            <div class="card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <h3>Une coordination centralis&eacute;e des SPST</h3>
+            <p>Un seul interlocuteur qui g&egrave;re les relations avec tous vos SPST, les adh&eacute;sions, r&eacute;siliations et relances</p>
+          </div>
+
+          <div class="column-card ideal-card">
+            <div class="card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <h3>Une tra&ccedil;abilit&eacute; prouvable de chaque visite</h3>
+            <p>Chaque avis d'aptitude collect&eacute;, dat&eacute;, archiv&eacute; et accessible en cas de besoin</p>
+          </div>
+
+          <div class="column-card ideal-card">
+            <div class="card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <path d="M2 10h20"/>
+                <path d="M6 15h4"/>
+                <path d="M14 15h4"/>
+              </svg>
+            </div>
+            <h3>Un contr&ocirc;le des factures avant paiement</h3>
+            <p>V&eacute;rification syst&eacute;matique des factures SPST : coh&eacute;rence, doublons, &eacute;carts</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 5: INTRODUCTION -->
+    <section class="slide slide-introduction" data-chapter="introduction">
+      <div class="slide-inner">
+        <div class="intro-hero">
+          <div class="intro-hero-collage">
+            <!-- First set (features images only) -->
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Coordination SPST">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le factures">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Avis d'aptitude">
+            <!-- Duplicate for seamless loop -->
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Coordination SPST">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le factures">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Avis d'aptitude">
+          </div>
+          <div class="intro-hero-logo">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+          </div>
+
+          <div class="intro-title-band">
+            <h2 class="intro-offer-title">Externalisation des visites m&eacute;dicales</h2>
+          </div>
+
+          <div class="intro-stats">
+            <div class="intro-stat-card">
+              <div class="intro-stat-number">96 000+</div>
+              <div class="intro-stat-label">Salari&eacute;s en gestion</div>
+            </div>
+            <div class="intro-stat-card">
+              <div class="intro-stat-number">225 000+</div>
+              <div class="intro-stat-label">&Eacute;changes SPST par an</div>
+            </div>
+            <div class="intro-stat-card">
+              <div class="intro-stat-number">54 000+</div>
+              <div class="intro-stat-label">Convocations trait&eacute;es par an</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro-content">
+          <p class="intro-pitch">Nous pilotons le suivi de vos visites m&eacute;dicales : planification unifi&eacute;e par risque, coordination multi-SPST centralis&eacute;e, et tra&ccedil;abilit&eacute; compl&egrave;te pour vous aider &agrave; maintenir la conformit&eacute; avec vos obligations l&eacute;gales.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: VALEUR - Overview Grid (4 Attributs) -->
+    <section class="slide" data-chapter="valeur">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Ce qu'Ayming vous apporte<br>
+          de diff&eacute;rent
+        </h1>
+
+        <div class="feature-grid-4">
+          <!-- Attribut 1 -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4"/>
+                <path d="M8 2v4"/>
+                <path d="M3 10h18"/>
+                <path d="M8 14h.01"/>
+                <path d="M12 14h.01"/>
+                <path d="M16 14h.01"/>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h4>Planning unifi&eacute; et prioris&eacute; par risque</h4>
+              <p>Un planning unique qui couvre tous vos sites, tous les types de visites, prioris&eacute; par risque</p>
+            </div>
+          </div>
+
+          <!-- Attribut 2 -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h4>Coordination multi-SPST centralis&eacute;e</h4>
+              <p>Coordination centralis&eacute;e de tous vos SPST, quelle que soit leur r&eacute;partition g&eacute;ographique</p>
+            </div>
+          </div>
+
+          <!-- Attribut 3 -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h4>Avis d'aptitude trac&eacute;s et archivables</h4>
+              <p>Tra&ccedil;abilit&eacute; compl&egrave;te de chaque visite, prouvable &agrave; tout moment</p>
+            </div>
+          </div>
+
+          <!-- Attribut 4 -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <path d="M2 10h20"/>
+                <path d="M6 15h4"/>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h4>Contr&ocirc;le et r&egrave;glement des factures SPST</h4>
+              <p>Co&ucirc;ts SPST ma&icirc;tris&eacute;s avec une visibilit&eacute; compl&egrave;te par site et par p&eacute;riode</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 7: VALUE DETAIL 1 - Planning unifi&eacute; et prioris&eacute; par risque -->
+    <section class="slide" data-chapter="valeur-1">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Planning unifi&eacute; et prioris&eacute; par risque</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Cartographie en temps r&eacute;el de toutes les &eacute;ch&eacute;ances par salari&eacute;, type de visite et site
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Priorisation automatique par niveau de risque (SIR avant VIP)
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Alertes email/SMS pour les salari&eacute;s et les r&eacute;f&eacute;rents RH
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Planning unifi&eacute;">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 8: VALUE DETAIL 2 - Coordination multi-SPST centralis&eacute;e -->
+    <section class="slide" data-chapter="valeur-2">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Coordination multi-SPST centralis&eacute;e</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              R&eacute;f&eacute;rentiel d'adh&eacute;sions par &eacute;tablissement (adh&eacute;sions, r&eacute;siliations, transferts)
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Relances directes aupr&egrave;s des SPST et des salari&eacute;s
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Gestion des reports, no-shows et replanifications
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Coordination multi-SPST">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 9: VALUE DETAIL 3 - Avis d'aptitude trac&eacute;s et archivables -->
+    <section class="slide" data-chapter="valeur-3">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Avis d'aptitude trac&eacute;s et archivables</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Chaque avis d'aptitude collect&eacute;, dat&eacute; et archiv&eacute; conform&eacute;ment RGPD/HDS
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Reporting p&eacute;riodique : taux de visites effectu&eacute;es, replanifications, no-shows
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Documentation prouvable de chaque visite r&eacute;alis&eacute;e
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Tra&ccedil;abilit&eacute; des visites">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 10: VALUE DETAIL 4 - Contr&ocirc;le et r&egrave;glement des factures SPST -->
+    <section class="slide" data-chapter="valeur-4">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Contr&ocirc;le et r&egrave;glement des factures SPST</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              V&eacute;rification syst&eacute;matique des factures avant paiement (coh&eacute;rence, doublons)
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Visibilit&eacute; par site, par SPST et par p&eacute;riode
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Suivi de la cotisation per capita et des &eacute;carts
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le des factures SPST">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 11: PREUVES (testimonial-split, 1 testimonial) -->
+    <section class="slide" data-chapter="preuves">
+      <div class="slide-inner">
+        <h1 class="slide-title">Ils nous font confiance</h1>
+
+        <div class="testimonial-split">
+          <div class="testimonial-split-content">
+            <div class="testimonial-split-rating">
+              <span class="testimonial-split-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="testimonial-split-date">2024</span>
+            </div>
+            <p class="testimonial-split-quote">Je recommande Ayming pour la qualit&eacute; de service, le professionnalisme des &eacute;quipes, la disponibilit&eacute; et le suivi commercial.</p>
+            <div class="testimonial-split-author">
+              <span class="testimonial-split-name">Xavier BERHONDE</span>
+              <span class="testimonial-split-position">Directeur QSE, EURALIS SOLUTIONS</span>
+              <div class="testimonial-split-company-logo">
+                <img src="https://pbs.twimg.com/profile_images/942009430262145024/hppGHpbk_400x400.jpg" alt="EURALIS">
+              </div>
+            </div>
+            <a href="https://www.ayming.fr/temoignages-clients/lexternalisation-du-suivi-des-visites-medicales-chez-euralis/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-split-cta">Lire le t&eacute;moignage complet</a>
+          </div>
+          <div class="testimonial-split-image">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/05/Euralis-1436x808-1.jpg" alt="EURALIS - Externalisation des visites m&eacute;dicales">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 12: QUESTIONS -->
+    <section class="slide" data-chapter="questions">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Questions qu'on nous pose souvent
+        </h1>
+
+        <div class="faq-grid">
+          <div class="faq-card">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Comment planifiez-vous les visites malgr&eacute; la p&eacute;nurie ?
+            </h4>
+            <p>Notre logiciel de pilotage cartographie en temps r&eacute;el toutes vos &eacute;ch&eacute;ances. Nos &eacute;quipes valident, priorisent et exploitent ces donn&eacute;es pour anticiper les rendez-vous avant que les d&eacute;lais ne soient d&eacute;pass&eacute;s.</p>
+          </div>
+
+          <div class="faq-card">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Comment g&eacute;rez-vous plusieurs sites et SPST ?
+            </h4>
+            <p>Nous maintenons un r&eacute;f&eacute;rentiel d'adh&eacute;sions par &eacute;tablissement, coordonnons les SPST concern&eacute;s et consolidons le reporting multi-sites pour une vision unique.</p>
+          </div>
+
+          <div class="faq-card">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              Que se passe-t-il si un salari&eacute; ou le SPST reporte ?
+            </h4>
+            <p>Nous mettons &agrave; jour le planning en temps r&eacute;el, replanifions la visite et tenons l'historique des &eacute;changes. Les nouvelles dates sont int&eacute;gr&eacute;es automatiquement dans votre reporting.</p>
+          </div>
+
+          <div class="faq-card">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Comment les donn&eacute;es m&eacute;dicales sont-elles prot&eacute;g&eacute;es ?
+            </h4>
+            <p>Les avis sont archiv&eacute;s selon les normes RGPD et HDS. Seules les informations n&eacute;cessaires &agrave; la conformit&eacute; RH sont accessibles &agrave; vos &eacute;quipes. Certifications ISO 27001 et ISO 9001.</p>
+          </div>
+
+          <div class="faq-card">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+              Peut-on suivre les indicateurs de performance ?
+            </h4>
+            <p>Nous fournissons un reporting p&eacute;riodique avec taux de visites effectu&eacute;es, replanifications, no-shows et respect des &eacute;ch&eacute;ances.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 13: PROCESSUS -->
+    <section class="slide" data-chapter="processus">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Comment d&eacute;marrer
+        </h1>
+
+        <div class="process-timeline-4">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-title">Diagnostic gratuit</div>
+            <div class="step-description">Analyse de votre situation actuelle : nombre de sites, SPST, volumes, taux de conformit&eacute; estim&eacute;</div>
+          </div>
+
+          <span class="step-arrow">&rarr;</span>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-title">Proposition d'accompagnement</div>
+            <div class="step-description">Plan personnalis&eacute; avec p&eacute;rim&egrave;tre, planning et tarification</div>
+          </div>
+
+          <span class="step-arrow">&rarr;</span>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-title">Phase pilote</div>
+            <div class="step-description">D&eacute;marrage sur un p&eacute;rim&egrave;tre restreint (ex : une r&eacute;gion ou une filiale)</div>
+          </div>
+
+          <span class="step-arrow">&rarr;</span>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-title">D&eacute;ploiement</div>
+            <div class="step-description">Extension progressive &agrave; l'ensemble du groupe</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 14: D&Eacute;MARRAGE -->
+    <section class="slide" data-chapter="demarrage">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Ce dont nous avons besoin<br>
+          pour d&eacute;marrer
+        </h1>
+
+        <div class="requirements-box">
+          <h4>Quatre &eacute;l&eacute;ments simples</h4>
+          <ul>
+            <li>
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Liste des &eacute;tablissements et des SPST rattach&eacute;s
+            </li>
+            <li>
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Extraction SIRH des effectifs par site
+            </li>
+            <li>
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Historique des visites r&eacute;alis&eacute;es (si disponible)
+            </li>
+            <li>
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Interlocuteur RH et/ou SST pour le pilotage
+            </li>
+          </ul>
+        </div>
+
+        <div class="cta-box">
+          <p class="cta-text">Quand pouvons-nous planifier le diagnostic ?</p>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Keyboard Hint (clickable) -->
+  <div class="keyboard-hint">
+    <span><span class="key" id="key-prev">&larr;</span><span class="key" id="key-next">&rarr;</span> Naviguer</span>
+    <span><span class="key" id="key-fullscreen">F</span> Plein &eacute;cran</span>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const navItems = document.querySelectorAll('.nav-item');
+    const counter = document.querySelector('.slide-counter');
+    const totalSlides = slides.length;
+
+    // Configuration for nav-to-slide mapping
+    // Value detail slides (index 7 to 10) all map to nav item with data-slide="6"
+    const valueDetailStartIndex = 7;
+    const valueDetailCount = 4;
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+
+      navItems.forEach((item) => {
+        item.classList.remove('active');
+        const navSlideIndex = parseInt(item.dataset.slide);
+
+        const isValueDetailSlide = currentSlide >= valueDetailStartIndex &&
+                                   currentSlide < valueDetailStartIndex + valueDetailCount;
+
+        if (navSlideIndex === currentSlide ||
+            (isValueDetailSlide && navSlideIndex === 6)) {
+          item.classList.add('active');
+        }
+      });
+
+      counter.innerHTML = `<span class="current">${currentSlide + 1}</span>/${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateSlide();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowRight':
+        case ' ':
+          e.preventDefault();
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+          prevSlide();
+          break;
+        case 'f':
+        case 'F':
+          toggleFullscreen();
+          break;
+        case 'Home':
+          goToSlide(0);
+          break;
+        case 'End':
+          goToSlide(totalSlides - 1);
+          break;
+      }
+    });
+
+    navItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const slideIndex = parseInt(item.dataset.slide);
+        goToSlide(slideIndex);
+      });
+    });
+
+    // Clickable keyboard hints
+    document.getElementById('key-prev').addEventListener('click', prevSlide);
+    document.getElementById('key-next').addEventListener('click', nextSlide);
+    document.getElementById('key-fullscreen').addEventListener('click', toggleFullscreen);
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+
+    updateSlide();
+  </script>
+
+</body>
+</html>
