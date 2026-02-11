@@ -847,6 +847,57 @@
       width: auto;
     }
 
+    /* ===== IMPLANTATION MAP ===== */
+    .implantation-container {
+      width: 100%;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    .implantation-map {
+      width: 100%;
+      height: auto;
+    }
+
+    .implantation-map .continent {
+      fill: #7dd3f0;
+    }
+
+    .implantation-map .pin-ring {
+      fill: white;
+      stroke: #e0e0e0;
+      stroke-width: 0.8;
+    }
+
+    .implantation-map .pin-dot {
+      fill: #7dd3f0;
+    }
+
+    .implantation-map .leader-line {
+      stroke: #555;
+      stroke-width: 0.6;
+      fill: none;
+    }
+
+    .implantation-map .country-label {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      fill: #333;
+    }
+
+    .implantation-footnote {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 8px;
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    .implantation-footnote span {
+      color: #e74c3c;
+    }
+
     /* ===== FAQ CARDS ===== */
     .faq-grid {
       display: grid;
@@ -1382,21 +1433,25 @@
       </div>
       <div class="nav-item" data-slide="12">
         <span class="nav-item-number">09</span>
-        Questions
+        Implantation
       </div>
       <div class="nav-item" data-slide="13">
         <span class="nav-item-number">10</span>
-        Processus
+        Questions
       </div>
       <div class="nav-item" data-slide="14">
         <span class="nav-item-number">11</span>
+        Processus
+      </div>
+      <div class="nav-item" data-slide="15">
+        <span class="nav-item-number">12</span>
         D&eacute;marrage
       </div>
     </div>
   </nav>
 
   <!-- Slide Counter -->
-  <div class="slide-counter"><span class="current">1</span>/15</div>
+  <div class="slide-counter"><span class="current">1</span>/16</div>
 
   <!-- Presentation -->
   <main class="presentation">
@@ -1965,7 +2020,168 @@
       </div>
     </section>
 
-    <!-- SLIDE 12: QUESTIONS -->
+    <!-- SLIDE 12: IMPLANTATION -->
+    <section class="slide" data-chapter="implantation">
+      <div class="slide-inner">
+        <h1 class="slide-title">
+          Une implantation dans <strong>14 pays</strong>*<br>
+          pour une proximit&eacute; accrue avec nos clients
+        </h1>
+
+        <div class="implantation-container">
+          <svg class="implantation-map" viewBox="0 0 1050 480" xmlns="http://www.w3.org/2000/svg">
+            <!-- ===== NORTH AMERICA ===== -->
+            <g>
+              <!-- Main landmass -->
+              <path class="continent" d="M 28,105 C 22,85 18,65 30,48 C 42,32 72,22 115,16 C 160,10 210,8 260,10 C 300,12 332,20 352,35 C 365,48 372,65 368,80 C 375,90 382,108 378,128 C 372,152 352,172 328,188 C 305,205 282,228 262,255 C 242,280 218,298 192,305 C 165,312 142,302 122,282 C 100,258 82,228 68,198 C 52,165 38,135 28,105 Z"/>
+              <!-- Alaska nub -->
+              <path class="continent" d="M 28,105 C 20,95 12,82 18,70 C 25,58 38,52 52,48 L 30,48 C 18,58 15,75 18,88 Z"/>
+
+              <!-- Pin: Canada -->
+              <circle class="pin-ring" cx="235" cy="72" r="6"/>
+              <circle class="pin-dot" cx="235" cy="72" r="2.5"/>
+              <!-- Pin: USA -->
+              <circle class="pin-ring" cx="195" cy="200" r="6"/>
+              <circle class="pin-dot" cx="195" cy="200" r="2.5"/>
+
+              <!-- Label: Canada -->
+              <line class="leader-line" x1="235" y1="66" x2="235" y2="38"/>
+              <line class="leader-line" x1="235" y1="38" x2="265" y2="38"/>
+              <text class="country-label" x="270" y="42">Canada</text>
+
+              <!-- Label: &Eacute;tats-Unis -->
+              <line class="leader-line" x1="189" y1="200" x2="50" y2="200"/>
+              <line class="leader-line" x1="50" y1="200" x2="50" y2="310"/>
+              <text class="country-label" x="15" y="325">&Eacute;tats-Unis</text>
+            </g>
+
+            <!-- ===== EUROPE ===== -->
+            <g>
+              <!-- Ireland -->
+              <path class="continent" d="M 532,145 C 528,155 527,168 530,180 C 534,190 542,195 548,188 C 554,180 555,168 552,155 C 549,145 540,140 532,145 Z"/>
+
+              <!-- UK -->
+              <path class="continent" d="M 558,110 C 554,122 552,138 555,158 C 558,175 565,188 575,195 C 583,200 592,192 595,180 C 598,165 595,145 588,128 C 583,115 572,108 558,110 Z"/>
+
+              <!-- Scandinavia -->
+              <path class="continent" d="M 652,58 C 648,40 655,22 672,14 C 690,8 710,12 725,25 C 735,35 738,48 735,58 C 730,65 722,62 715,55 C 708,48 698,42 688,40 C 678,38 668,42 662,52 Z"/>
+
+              <!-- Main continental mass -->
+              <path class="continent" d="M 585,115 C 595,98 622,78 652,65 C 680,55 710,52 740,58 C 768,65 795,62 822,68 C 848,75 872,88 892,105 C 912,122 928,145 935,172 C 940,200 936,228 922,252 C 908,278 885,298 858,315 C 832,332 802,342 772,345 C 742,348 715,342 692,328 C 680,340 672,358 662,375 C 652,392 638,402 625,395 C 612,388 615,370 622,352 C 628,338 625,325 615,315 C 602,302 588,288 575,272 C 562,255 555,238 555,218 C 555,198 562,180 575,165 C 585,152 588,135 585,115 Z"/>
+
+              <!-- Iberian Peninsula -->
+              <path class="continent" d="M 555,272 C 548,290 538,312 535,335 C 532,358 538,378 552,392 C 568,405 590,410 612,402 C 630,395 642,378 645,358 C 648,342 642,325 632,312 C 622,300 608,290 592,280 L 575,272 Z"/>
+
+              <!-- Italian Peninsula -->
+              <path class="continent" d="M 692,328 C 698,348 708,368 712,388 C 715,402 710,415 700,418 C 690,420 682,412 678,398 C 675,382 678,365 685,348 C 688,338 690,332 692,328 Z"/>
+
+              <!-- Pin: Irlande -->
+              <circle class="pin-ring" cx="540" cy="168" r="5"/>
+              <circle class="pin-dot" cx="540" cy="168" r="2"/>
+              <!-- Pin: Angleterre -->
+              <circle class="pin-ring" cx="572" cy="155" r="5"/>
+              <circle class="pin-dot" cx="572" cy="155" r="2"/>
+              <!-- Pin: Pays-Bas -->
+              <circle class="pin-ring" cx="648" cy="100" r="5"/>
+              <circle class="pin-dot" cx="648" cy="100" r="2"/>
+              <!-- Pin: Belgique -->
+              <circle class="pin-ring" cx="635" cy="125" r="5"/>
+              <circle class="pin-dot" cx="635" cy="125" r="2"/>
+              <!-- Pin: France -->
+              <circle class="pin-ring" cx="615" cy="215" r="5"/>
+              <circle class="pin-dot" cx="615" cy="215" r="2"/>
+              <!-- Pin: Allemagne -->
+              <circle class="pin-ring" cx="698" cy="105" r="5"/>
+              <circle class="pin-dot" cx="698" cy="105" r="2"/>
+              <!-- Pin: R&eacute;p. Tch&egrave;que -->
+              <circle class="pin-ring" cx="735" cy="128" r="5"/>
+              <circle class="pin-dot" cx="735" cy="128" r="2"/>
+              <!-- Pin: Pologne -->
+              <circle class="pin-ring" cx="768" cy="105" r="5"/>
+              <circle class="pin-dot" cx="768" cy="105" r="2"/>
+              <!-- Pin: Slovaquie -->
+              <circle class="pin-ring" cx="752" cy="155" r="5"/>
+              <circle class="pin-dot" cx="752" cy="155" r="2"/>
+              <!-- Pin: Portugal -->
+              <circle class="pin-ring" cx="545" cy="352" r="5"/>
+              <circle class="pin-dot" cx="545" cy="352" r="2"/>
+              <!-- Pin: Espagne -->
+              <circle class="pin-ring" cx="582" cy="345" r="5"/>
+              <circle class="pin-dot" cx="582" cy="345" r="2"/>
+              <!-- Pin: Italie -->
+              <circle class="pin-ring" cx="695" cy="358" r="5"/>
+              <circle class="pin-dot" cx="695" cy="358" r="2"/>
+
+              <!-- Labels with leader lines -->
+              <!-- Irlande (left) -->
+              <line class="leader-line" x1="535" y1="168" x2="490" y2="168"/>
+              <text class="country-label" x="488" y="172" text-anchor="end">Irlande</text>
+
+              <!-- Angleterre (top-left) -->
+              <line class="leader-line" x1="572" y1="150" x2="572" y2="98"/>
+              <line class="leader-line" x1="572" y1="98" x2="590" y2="98"/>
+              <text class="country-label" x="594" y="102">Angleterre</text>
+
+              <!-- Pays-Bas (top) -->
+              <line class="leader-line" x1="648" y1="95" x2="648" y2="72"/>
+              <line class="leader-line" x1="648" y1="72" x2="665" y2="72"/>
+              <text class="country-label" x="669" y="76">Pays-Bas</text>
+
+              <!-- Belgique (left) -->
+              <line class="leader-line" x1="630" y1="125" x2="495" y2="125"/>
+              <line class="leader-line" x1="495" y1="125" x2="495" y2="198"/>
+              <text class="country-label" x="488" y="212" text-anchor="end">Belgique</text>
+
+              <!-- France (left) -->
+              <line class="leader-line" x1="610" y1="215" x2="495" y2="215"/>
+              <line class="leader-line" x1="495" y1="215" x2="495" y2="248"/>
+              <text class="country-label" x="488" y="258" text-anchor="end">France</text>
+
+              <!-- Allemagne (right) -->
+              <line class="leader-line" x1="703" y1="105" x2="820" y2="105"/>
+              <line class="leader-line" x1="820" y1="105" x2="820" y2="82"/>
+              <text class="country-label" x="824" y="78">Allemagne</text>
+
+              <!-- R&eacute;publique Tch&egrave;que (right) -->
+              <line class="leader-line" x1="740" y1="128" x2="920" y2="128"/>
+              <text class="country-label" x="924" y="132">R&eacute;publique Tch&egrave;que</text>
+
+              <!-- Pologne (right) -->
+              <line class="leader-line" x1="773" y1="105" x2="920" y2="105"/>
+              <line class="leader-line" x1="920" y1="105" x2="920" y2="158"/>
+              <text class="country-label" x="924" y="162">Pologne</text>
+
+              <!-- Slovaquie (right) -->
+              <line class="leader-line" x1="757" y1="155" x2="920" y2="155"/>
+              <line class="leader-line" x1="920" y1="155" x2="920" y2="188"/>
+              <text class="country-label" x="924" y="192">Slovaquie</text>
+
+              <!-- Portugal (bottom-left) -->
+              <line class="leader-line" x1="540" y1="352" x2="490" y2="352"/>
+              <line class="leader-line" x1="490" y1="352" x2="490" y2="395"/>
+              <text class="country-label" x="488" y="408" text-anchor="end">Portugal</text>
+
+              <!-- Espagne (bottom) -->
+              <line class="leader-line" x1="582" y1="350" x2="582" y2="428"/>
+              <text class="country-label" x="560" y="442">Espagne</text>
+
+              <!-- Italie (bottom) -->
+              <line class="leader-line" x1="695" y1="363" x2="695" y2="428"/>
+              <line class="leader-line" x1="695" y1="428" x2="730" y2="428"/>
+              <text class="country-label" x="734" y="432">Italie</text>
+            </g>
+          </svg>
+        </div>
+
+        <p class="implantation-footnote">*<span>bureaux</span> directs</p>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 13: QUESTIONS -->
     <section class="slide" data-chapter="questions">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -2025,7 +2241,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 13: PROCESSUS -->
+    <!-- SLIDE 14: PROCESSUS -->
     <section class="slide" data-chapter="processus">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -2065,7 +2281,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 14: D&Eacute;MARRAGE -->
+    <!-- SLIDE 15: D&Eacute;MARRAGE -->
     <section class="slide" data-chapter="demarrage">
       <div class="slide-inner">
         <h1 class="slide-title">
