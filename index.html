@@ -1111,121 +1111,281 @@
     }
 
     /* ===== TESTIMONIAL SPLIT (1 testimonial) ===== */
-    .testimonial-split {
+    .testimonial-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
       width: 100%;
-      max-width: 1100px;
-      align-items: center;
+      max-width: 900px;
+      perspective: 1000px;
     }
 
-    .testimonial-split-content {
-      text-align: left;
+    .testimonial-card {
+      position: relative;
+      height: 420px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .testimonial-split-rating {
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .testimonial-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+    }
+
+    .testimonial-card:hover .testimonial-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .testimonial-front,
+    .testimonial-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .testimonial-front {
+      background: var(--bg-white);
+    }
+
+    .testimonial-front > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .testimonial-card:hover .testimonial-front > img {
+      transform: scale(1.05);
+    }
+
+    .testimonial-front::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.05) 35%,
+        rgba(0, 0, 0, 0.05) 55%,
+        rgba(0, 61, 121, 0.4) 85%,
+        rgba(0, 61, 121, 0.6) 100%
+      );
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .testimonial-logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5);
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover .testimonial-logo {
+      transform: scale(1.05);
+    }
+
+    .testimonial-logo img {
+      height: 30px;
+      width: auto;
+      max-width: 110px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .testimonial-title {
+      position: absolute;
+      bottom: 80px;
+      left: 24px;
+      right: 24px;
+      font-size: 19px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.35;
+      margin: 0;
+      z-index: 2;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.01em;
+    }
+
+    .testimonial-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
+      gap: 8px;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 2;
+      background: linear-gradient(135deg, var(--blue-primary), var(--gradient-green-end));
+      padding: 10px 18px;
+      border-radius: 24px;
+      box-shadow: 0 4px 16px rgba(0, 61, 121, 0.4);
+      transition: all 0.3s ease;
     }
 
-    .testimonial-split-stars {
+    .testimonial-card:hover .testimonial-hint {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .testimonial-hint svg {
+      width: 16px;
+      height: 16px;
+      animation: spin-hint 2s ease-in-out infinite;
+    }
+
+    @keyframes spin-hint {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+    }
+
+    .testimonial-back {
+      background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 28px 24px;
+      text-align: left;
+      position: relative;
+    }
+
+    .testimonial-stars {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-stars-icons {
       color: #fbbf24;
-      font-size: 20px;
+      font-size: 18px;
       letter-spacing: 3px;
     }
 
-    .testimonial-split-date {
+    .testimonial-date {
+      color: var(--text-gray);
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .testimonial-quote-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .testimonial-quote::before {
+      content: '\201C';
+      font-size: 28px;
+      font-family: Georgia, serif;
+      color: var(--blue-primary);
+      opacity: 0.5;
+      line-height: 1;
+      margin-right: 4px;
+    }
+
+    .testimonial-quote::after {
+      content: '\201D';
+      font-size: 28px;
+      font-family: Georgia, serif;
+      color: var(--blue-primary);
+      opacity: 0.5;
+      line-height: 1;
+      margin-left: 4px;
+    }
+
+    .testimonial-quote {
+      color: var(--text-dark);
       font-size: 15px;
       font-style: italic;
-      color: var(--text-gray);
-    }
-
-    .testimonial-split-quote {
-      font-size: 18px;
-      font-style: italic;
-      line-height: 1.8;
-      color: var(--text-dark);
-      margin-bottom: 28px;
+      line-height: 1.75;
+      margin-bottom: 16px;
       position: relative;
-      padding-left: 24px;
-      border-left: 4px solid var(--blue-accent);
+      z-index: 1;
     }
 
-    .testimonial-split-author {
-      margin-bottom: 20px;
-    }
-
-    .testimonial-split-name {
-      display: block;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 4px;
-    }
-
-    .testimonial-split-position {
-      display: block;
-      font-size: 14px;
-      color: var(--text-gray);
-      margin-bottom: 12px;
-    }
-
-    .testimonial-split-company-logo {
-      margin-top: 20px;
-    }
-
-    .testimonial-split-company-logo img {
-      height: 36px;
-      opacity: 0.8;
-    }
-
-    .testimonial-split-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, var(--blue-primary), var(--gradient-green-end));
-      color: white;
+    .testimonial-cta {
+      color: var(--blue-primary);
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 24px;
-      box-shadow: 0 4px 12px rgba(0,61,121,0.3);
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
-    .testimonial-split-cta::after {
+    .testimonial-cta::after {
       content: '\2192';
       display: inline-block;
       transition: transform 0.2s ease;
     }
 
-    .testimonial-split-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,61,121,0.4);
+    .testimonial-cta:hover {
+      color: var(--gradient-green-end);
     }
 
-    .testimonial-split-cta:hover::after {
+    .testimonial-cta:hover::after {
       transform: translateX(4px);
     }
 
-    .testimonial-split-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .testimonial-author {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid #e5e5e5;
     }
 
-    .testimonial-split-image img {
-      width: 100%;
-      max-width: 520px;
-      border-radius: 20px;
-      box-shadow:
-        0 0 60px 20px rgba(17, 169, 230, 0.25),
-        0 0 100px 40px rgba(10, 179, 140, 0.15),
-        0 10px 40px rgba(0, 0, 0, 0.1);
+    .testimonial-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .testimonial-position {
+      font-size: 12px;
+      color: var(--text-gray);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .testimonial-company-logo {
+      height: 22px;
+      width: auto;
+      max-width: 70px;
+      object-fit: contain;
+      opacity: 0.7;
+      display: block;
     }
 
     /* ===== CTA BOX ===== */
@@ -1383,14 +1543,12 @@
       opacity: 0;
     }
 
-    .slide.active .testimonial-split-content {
-      animation: fadeInUp 0.6s ease 0.2s forwards;
+    .slide.active .testimonial-card {
+      animation: fadeInUp 0.6s ease forwards;
       opacity: 0;
     }
-    .slide.active .testimonial-split-image {
-      animation: fadeInUp 0.6s ease 0.4s forwards;
-      opacity: 0;
-    }
+    .slide.active .testimonial-card:nth-child(1) { animation-delay: 0.2s; }
+    .slide.active .testimonial-card:nth-child(2) { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
@@ -2052,29 +2210,62 @@
       </div>
     </section>
 
-    <!-- SLIDE 12: PREUVES (testimonial-split, 1 testimonial) -->
+    <!-- SLIDE 12: PREUVES (testimonial-grid, 2 flip cards) -->
     <section class="slide" data-chapter="preuves">
       <div class="slide-inner">
         <h1 class="slide-title">Ils nous font confiance</h1>
 
-        <div class="testimonial-split">
-          <div class="testimonial-split-content">
-            <div class="testimonial-split-rating">
-              <span class="testimonial-split-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-              <span class="testimonial-split-date">Ao&ucirc;t 2024</span>
-            </div>
-            <p class="testimonial-split-quote">Je recommande Ayming pour la qualit&eacute; de service, le professionnalisme des &eacute;quipes, la disponibilit&eacute; et le suivi commercial.</p>
-            <div class="testimonial-split-author">
-              <span class="testimonial-split-name">Xavier BERHONDE</span>
-              <span class="testimonial-split-position">Directeur QSE, EURALIS SOLUTIONS</span>
-              <div class="testimonial-split-company-logo">
-                <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/hppGHpbk_400x400-e1759306442143-176x55.jpeg" alt="EURALIS">
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-card-inner">
+              <div class="testimonial-front">
+                <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2024/08/Euralis-1436-x-808-1.jpg" alt="EURALIS">
+                <p class="testimonial-title">L'externalisation du suivi des visites m&eacute;dicales chez EURALIS</p>
+                <div class="testimonial-logo"><img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/hppGHpbk_400x400-e1759306442143-176x55.jpeg" alt="EURALIS"></div>
+                <span class="testimonial-hint">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                  D&eacute;couvrir
+                </span>
+              </div>
+              <div class="testimonial-back">
+                <div class="testimonial-stars"><span class="testimonial-stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="testimonial-date">Ao&ucirc;t 2024</span></div>
+                <div class="testimonial-quote-section">
+                  <p class="testimonial-quote">Je recommande Ayming pour la qualit&eacute; de service, le professionnalisme des &eacute;quipes, la disponibilit&eacute; et le suivi commercial.</p>
+                  <a href="https://www.ayming.fr/temoignages-clients/lexternalisation-du-suivi-des-visites-medicales-chez-euralis/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-cta">Lire la suite</a>
+                </div>
+                <div class="testimonial-author">
+                  <span class="testimonial-name">Xavier BERHONDE</span>
+                  <span class="testimonial-position">Directeur QSE, EURALIS SOLUTIONS</span>
+                  <img class="testimonial-company-logo" src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/hppGHpbk_400x400-e1759306442143-176x55.jpeg" alt="EURALIS">
+                </div>
               </div>
             </div>
-            <a href="https://www.ayming.fr/temoignages-clients/lexternalisation-du-suivi-des-visites-medicales-chez-euralis/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-split-cta">Lire le t&eacute;moignage complet</a>
           </div>
-          <div class="testimonial-split-image">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2024/08/Euralis-1436-x-808-1.jpg" alt="EURALIS - Externalisation des visites m&eacute;dicales">
+
+          <div class="testimonial-card">
+            <div class="testimonial-card-inner">
+              <div class="testimonial-front">
+                <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/KparK-532x470.jpg" alt="KparK">
+                <p class="testimonial-title">KparK externalise le suivi des visites m&eacute;dicales avec Ayming</p>
+                <div class="testimonial-logo"><img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/Sans-titre-3-176x88.jpg" alt="KparK"></div>
+                <span class="testimonial-hint">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                  D&eacute;couvrir
+                </span>
+              </div>
+              <div class="testimonial-back">
+                <div class="testimonial-stars"><span class="testimonial-stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="testimonial-date">Ao&ucirc;t 2025</span></div>
+                <div class="testimonial-quote-section">
+                  <p class="testimonial-quote">AYMING se rapprochait plus de nos attentes tant sur la proposition commerciale mais surtout sur l'accompagnement avec nos sp&eacute;cificit&eacute;s.</p>
+                  <a href="https://www.ayming.fr/temoignages-clients/kpark-externalise-le-suivi-des-visites-medicales-avec-ayming/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-cta">Lire la suite</a>
+                </div>
+                <div class="testimonial-author">
+                  <span class="testimonial-name">Perrine Domecq</span>
+                  <span class="testimonial-position">Charg&eacute;e administration du personnel, KparK</span>
+                  <img class="testimonial-company-logo" src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/08/Sans-titre-3-176x88.jpg" alt="KparK">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
