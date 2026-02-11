@@ -558,13 +558,19 @@
       margin-top: 6px;
     }
 
-    /* ===== FEATURE GRID (4 items, 2x2) ===== */
-    .feature-grid-4 {
+    /* ===== FEATURE GRID (5 items, 2x2 + 1 centered) ===== */
+    .feature-grid-5 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 50px 80px;
+      gap: 36px 80px;
       width: 100%;
       max-width: 1000px;
+    }
+
+    .feature-grid-5 .feature-item:last-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 440px;
     }
 
     .feature-item {
@@ -721,6 +727,27 @@
 
     .four-columns .column-card p {
       font-size: 13px;
+    }
+
+    /* ===== LAYOUT: 5 COLUMNS ===== */
+    .five-columns {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .five-columns .column-card .card-image {
+      height: 140px;
+    }
+
+    .five-columns .column-card h3 {
+      font-size: 14px;
+    }
+
+    .five-columns .column-card p {
+      font-size: 12px;
     }
 
     /* ===== PROCESS TIMELINE ===== */
@@ -1320,6 +1347,7 @@
     .slide.active .stat-card:nth-child(3),
     .slide.active .feature-item:nth-child(3) { animation-delay: 0.35s; }
     .slide.active .feature-item:nth-child(4) { animation-delay: 0.45s; }
+    .slide.active .feature-item:nth-child(5) { animation-delay: 0.55s; }
 
     /* Process steps */
     .slide.active .process-step:nth-of-type(1) { animation-delay: 0.15s; }
@@ -1436,24 +1464,24 @@
         <span class="nav-item-number">07</span>
         Valeur
       </div>
-      <!-- Value detail slides (7-10) map to nav item 6 -->
-      <div class="nav-item" data-slide="11">
+      <!-- Value detail slides (7-11) map to nav item 6 -->
+      <div class="nav-item" data-slide="12">
         <span class="nav-item-number">08</span>
         Preuves
       </div>
-      <div class="nav-item" data-slide="12">
+      <div class="nav-item" data-slide="13">
         <span class="nav-item-number">09</span>
         Implantation
       </div>
-      <div class="nav-item" data-slide="13">
+      <div class="nav-item" data-slide="15">
         <span class="nav-item-number">10</span>
         Questions
       </div>
-      <div class="nav-item" data-slide="14">
+      <div class="nav-item" data-slide="16">
         <span class="nav-item-number">11</span>
         Processus
       </div>
-      <div class="nav-item" data-slide="15">
+      <div class="nav-item" data-slide="17">
         <span class="nav-item-number">12</span>
         D&eacute;marrage
       </div>
@@ -1461,7 +1489,7 @@
   </nav>
 
   <!-- Slide Counter -->
-  <div class="slide-counter"><span class="current">1</span>/16</div>
+  <div class="slide-counter"><span class="current">1</span>/18</div>
 
   <!-- Presentation -->
   <main class="presentation">
@@ -1653,7 +1681,7 @@
           v&eacute;ritablement ma&icirc;tris&eacute;
         </h1>
 
-        <div class="four-columns">
+        <div class="five-columns">
           <div class="column-card ideal-card">
             <div class="card-image">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1669,7 +1697,7 @@
               </svg>
             </div>
             <h3>Un planning unique pour tous les sites</h3>
-            <p>Toutes les &eacute;ch&eacute;ances par salari&eacute;, par type de visite et par site, consolid&eacute;es dans un seul tableau de bord</p>
+            <p>Toutes les &eacute;ch&eacute;ances consolid&eacute;es par salari&eacute;, type de visite et site</p>
           </div>
 
           <div class="column-card ideal-card">
@@ -1681,7 +1709,7 @@
               </svg>
             </div>
             <h3>Une coordination centralis&eacute;e des SPST</h3>
-            <p>Un seul interlocuteur qui g&egrave;re les relations avec tous vos SPST, les adh&eacute;sions, r&eacute;siliations et relances</p>
+            <p>Un seul interlocuteur pour tous vos SPST, adh&eacute;sions et relances</p>
           </div>
 
           <div class="column-card ideal-card">
@@ -1691,8 +1719,24 @@
                 <polyline points="9 12 11 14 15 10"/>
               </svg>
             </div>
-            <h3>Une tra&ccedil;abilit&eacute; prouvable de chaque visite</h3>
-            <p>Chaque avis d'aptitude collect&eacute;, dat&eacute;, archiv&eacute; et accessible en cas de besoin</p>
+            <h3>Une tra&ccedil;abilit&eacute; prouvable</h3>
+            <p>Chaque avis d'aptitude collect&eacute;, dat&eacute;, archiv&eacute; et accessible</p>
+          </div>
+
+          <div class="column-card ideal-card">
+            <div class="card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8"/>
+                <path d="M12 17v4"/>
+                <path d="M7 8h2"/>
+                <path d="M7 11h4"/>
+                <path d="M15 8h2"/>
+                <path d="M15 11h2"/>
+              </svg>
+            </div>
+            <h3>Une visibilit&eacute; en temps r&eacute;el</h3>
+            <p>Des indicateurs consolid&eacute;s multi-sites accessibles imm&eacute;diatement</p>
           </div>
 
           <div class="column-card ideal-card">
@@ -1704,8 +1748,8 @@
                 <path d="M14 15h4"/>
               </svg>
             </div>
-            <h3>Un contr&ocirc;le des factures avant paiement</h3>
-            <p>V&eacute;rification syst&eacute;matique des factures SPST : coh&eacute;rence, doublons, &eacute;carts</p>
+            <h3>Un contr&ocirc;le des factures</h3>
+            <p>V&eacute;rification syst&eacute;matique des factures SPST avant paiement</p>
           </div>
         </div>
       </div>
@@ -1759,7 +1803,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 6: VALEUR - Overview Grid (4 Attributs) -->
+    <!-- SLIDE 6: VALEUR - Overview Grid (5 Attributs) -->
     <section class="slide" data-chapter="valeur">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -1767,7 +1811,7 @@
           de diff&eacute;rent
         </h1>
 
-        <div class="feature-grid-4">
+        <div class="feature-grid-5">
           <!-- Attribut 1 -->
           <div class="feature-item">
             <div class="feature-icon">
@@ -1817,6 +1861,25 @@
           </div>
 
           <!-- Attribut 4 -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8"/>
+                <path d="M12 17v4"/>
+                <path d="M7 8h2"/>
+                <path d="M7 11h4"/>
+                <path d="M15 8h2"/>
+                <path d="M15 11h2"/>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h4>Pilotage en temps r&eacute;el via Ayming Checkup</h4>
+              <p>&Eacute;tat de conformit&eacute; de vos visites accessible en temps r&eacute;el</p>
+            </div>
+          </div>
+
+          <!-- Attribut 5 -->
           <div class="feature-item">
             <div class="feature-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1958,8 +2021,48 @@
       </div>
     </section>
 
-    <!-- SLIDE 10: VALUE DETAIL 4 - Contr&ocirc;le et r&egrave;glement des factures SPST -->
+    <!-- SLIDE 10: VALUE DETAIL 4 - Pilotage en temps r&eacute;el via Ayming Checkup -->
     <section class="slide" data-chapter="valeur-4">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Pilotage en temps r&eacute;el via Ayming Checkup</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Reporting consolid&eacute; multi-sites avec statut de chaque visite (&agrave; planifier, planifi&eacute;, pr&eacute;vu, cl&ocirc;tur&eacute;)
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Indicateurs de pilotage : taux de visites r&eacute;alis&eacute;es, replanifications, no-shows, respect des &eacute;ch&eacute;ances
+            </li>
+            <li>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Visibilit&eacute; par &eacute;tablissement, par type de visite et par niveau de risque (SIR, SIA, SIS)
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Ayming Checkup - Pilotage en temps r&eacute;el">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 11: VALUE DETAIL 5 - Contr&ocirc;le et r&egrave;glement des factures SPST -->
+    <section class="slide" data-chapter="valeur-5">
       <div class="value-detail-layout">
         <div class="value-detail-content">
           <h2>Contr&ocirc;le et r&egrave;glement des factures SPST</h2>
@@ -1998,7 +2101,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 11: PREUVES (testimonial-split, 1 testimonial) -->
+    <!-- SLIDE 12: PREUVES (testimonial-split, 1 testimonial) -->
     <section class="slide" data-chapter="preuves">
       <div class="slide-inner">
         <h1 class="slide-title">Ils nous font confiance</h1>
@@ -2030,7 +2133,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 12: ANCRAGE FRANCE -->
+    <!-- SLIDE 13: ANCRAGE FRANCE -->
     <section class="slide" data-chapter="implantation">
       <div class="slide-inner">
         <div class="ancrage-layout">
@@ -2050,7 +2153,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 13: IMPLANTATION -->
+    <!-- SLIDE 14: IMPLANTATION -->
     <section class="slide" data-chapter="implantation">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -2069,7 +2172,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 13: QUESTIONS -->
+    <!-- SLIDE 15: QUESTIONS -->
     <section class="slide" data-chapter="questions">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -2129,7 +2232,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 14: PROCESSUS -->
+    <!-- SLIDE 16: PROCESSUS -->
     <section class="slide" data-chapter="processus">
       <div class="slide-inner">
         <h1 class="slide-title">
@@ -2169,7 +2272,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 15: D&Eacute;MARRAGE -->
+    <!-- SLIDE 17: D&Eacute;MARRAGE -->
     <section class="slide" data-chapter="demarrage">
       <div class="slide-inner">
         <h1 class="slide-title">
