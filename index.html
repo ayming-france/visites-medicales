@@ -558,20 +558,28 @@
       margin-top: 6px;
     }
 
-    /* ===== FEATURE GRID (5 items, 2x2 + 1 centered) ===== */
+    /* ===== FEATURE GRID (5 items, 3+2 centered) ===== */
     .feature-grid-5 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 36px 80px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 55px 25px;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1100px;
     }
 
-    .feature-grid-5 .feature-item:last-child {
-      grid-column: 1 / -1;
-      justify-self: center;
-      max-width: 440px;
-    }
+    /* Row 1: 3 items spanning 2 columns each */
+    .feature-grid-5 .feature-item:nth-child(1) { grid-column: 1 / 3; }
+    .feature-grid-5 .feature-item:nth-child(2) { grid-column: 3 / 5; }
+    .feature-grid-5 .feature-item:nth-child(3) { grid-column: 5 / 7; }
+
+    /* Row 2: 2 items centered */
+    .feature-grid-5 .feature-item:nth-child(4) { grid-column: 2 / 4; }
+    .feature-grid-5 .feature-item:nth-child(5) { grid-column: 4 / 6; }
+
+    /* Compact sizing for 5-item grid */
+    .feature-grid-5 .feature-icon { width: 52px; height: 52px; }
+    .feature-grid-5 .feature-content h4 { font-size: 15px; }
+    .feature-grid-5 .feature-content p { font-size: 13px; }
 
     .feature-item {
       display: flex;
@@ -1333,29 +1341,24 @@
     }
 
     .testimonial-cta {
-      color: var(--blue-primary);
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      background: linear-gradient(135deg, var(--blue-primary), var(--gradient-green-end));
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 24px;
+      text-decoration: none;
+      margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(0, 61, 121, 0.3);
       transition: all 0.2s ease;
     }
 
-    .testimonial-cta::after {
-      content: '\2192';
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-
     .testimonial-cta:hover {
-      color: var(--gradient-green-end);
-    }
-
-    .testimonial-cta:hover::after {
-      transform: translateX(4px);
+      box-shadow: 0 6px 16px rgba(0, 61, 121, 0.4);
+      transform: translateY(-1px);
     }
 
     .testimonial-author {
@@ -1664,7 +1667,7 @@
           </p>
 
           <p class="content-paragraph">
-            Les types de visites se multiplient (VIP, SIR, reprise, mi-carri&egrave;re, post-exposition, liaison), chacun avec <strong>ses propres r&egrave;gles et ses propres d&eacute;lais</strong>. Ajoutez plusieurs sites, plusieurs SPST, et personne ne sait plus o&ugrave; en est la conformit&eacute; globale.
+            Les types de visites se multiplient, chacun avec <strong>ses propres r&egrave;gles et ses propres d&eacute;lais</strong>. Ajoutez plusieurs sites, plusieurs SPST, et personne ne sait plus o&ugrave; en est la conformit&eacute; globale.
           </p>
 
           <p class="content-paragraph highlight">
@@ -1873,14 +1876,16 @@
       <div class="slide-inner">
         <div class="intro-hero">
           <div class="intro-hero-collage">
-            <!-- First set (features images only) -->
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Coordination SPST">
+            <!-- First set (features images) -->
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Visites m&eacute;dicales">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Planning unifi&eacute;">
             <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le factures">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Avis d'aptitude">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Tra&ccedil;abilit&eacute;">
             <!-- Duplicate for seamless loop -->
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Coordination SPST">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Visites m&eacute;dicales">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Planning unifi&eacute;">
             <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le factures">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Avis d'aptitude">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-4.jpg" alt="Tra&ccedil;abilit&eacute;">
           </div>
           <div class="intro-hero-logo">
             <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
@@ -2160,7 +2165,7 @@
 
         <div class="value-detail-visual">
           <div class="value-image-container">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2026/02/vm-5.jpg" alt="Ayming Checkup - Pilotage en temps r&eacute;el">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-2.jpg" alt="Ayming Checkup - Pilotage en temps r&eacute;el">
           </div>
         </div>
       </div>
@@ -2230,7 +2235,7 @@
               <div class="testimonial-back">
                 <div class="testimonial-stars"><span class="testimonial-stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="testimonial-date">Ao&ucirc;t 2024</span></div>
                 <div class="testimonial-quote-section">
-                  <p class="testimonial-quote">Je recommande Ayming pour la qualit&eacute; de service, le professionnalisme des &eacute;quipes, la disponibilit&eacute; et le suivi commercial.</p>
+                  <p class="testimonial-quote">Je recommande Ayming pour la qualit&eacute; de ses prestations, le professionnalisme et la disponibilit&eacute; des &eacute;quipes ainsi que pour le suivi commercial du dossier.</p>
                   <a href="https://www.ayming.fr/temoignages-clients/lexternalisation-du-suivi-des-visites-medicales-chez-euralis/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-cta">Lire la suite</a>
                 </div>
                 <div class="testimonial-author">
@@ -2257,7 +2262,7 @@
                 <div class="testimonial-stars"><span class="testimonial-stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="testimonial-date">Ao&ucirc;t 2025</span></div>
                 <div class="testimonial-quote-section">
                   <p class="testimonial-quote">AYMING se rapprochait plus de nos attentes tant sur la proposition commerciale mais surtout sur l'accompagnement avec nos sp&eacute;cificit&eacute;s.</p>
-                  <a href="https://www.ayming.fr/temoignages-clients/kpark-externalise-le-suivi-des-visites-medicales-avec-ayming/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-cta">Lire la suite</a>
+                  <a href="https://www.ayming.fr/temoignages-clients/la-securisation-du-suivi-des-visites-medicales-chez-kpark/?utm_source=slides-sales&utm_medium=print&utm_campaign=visites-medicales&utm_content=testimonial" target="_blank" class="testimonial-cta">Lire la suite</a>
                 </div>
                 <div class="testimonial-author">
                   <span class="testimonial-name">Perrine Domecq</span>
@@ -2488,7 +2493,7 @@
     // Configuration for nav-to-slide mapping
     // Value detail slides (index 7 to 10) all map to nav item with data-slide="6"
     const valueDetailStartIndex = 7;
-    const valueDetailCount = 4;
+    const valueDetailCount = 5;
 
     function updateSlide() {
       slides.forEach((slide, index) => {
