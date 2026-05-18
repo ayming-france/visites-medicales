@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Externalisation des visites médicales - Ayming</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://ayming-france.github.io/assets/slides/slides.css">
+  <link rel="stylesheet" href="https://ayming-france.github.io/assets/engine/slides.css">
   <style>
     .testimonial-grid {
       display: grid;
@@ -607,6 +607,10 @@
       <div class="slide-inner">
         <h1 class="slide-title">Ils nous font confiance</h1>
 
+        <style>
+          .testimonial-card .testimonial-front img { filter: brightness(0.8) saturate(0.85); transition: filter 0.4s ease; }
+          .testimonial-card:hover .testimonial-front img { filter: brightness(0.65) saturate(0.8); }
+        </style>
         <div class="testimonial-grid">
           <div class="testimonial-card">
             <div class="testimonial-card-inner">
@@ -847,7 +851,7 @@
     <span><span class="key" id="key-fullscreen">F</span> Plein &eacute;cran</span>
   </div>
 
-  <script src="https://ayming-france.github.io/assets/slides/slides.js"></script>
+  <script src="https://ayming-france.github.io/assets/engine/slides.js"></script>
 
 <!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
