@@ -70,31 +70,39 @@
         Valeur
       </div>
       <!-- Value detail slides (7-11) map to nav item 6 -->
-      <div class="nav-item" data-slide="12">
-        <span class="nav-item-number">08</span>
-        Preuves
-      </div>
       <div class="nav-item" data-slide="13">
+        <span class="nav-item-number">08</span>
+        Int&eacute;grations
+      </div>
+      <div class="nav-item" data-slide="14">
         <span class="nav-item-number">09</span>
-        Implantation
+        Preuves
       </div>
       <div class="nav-item" data-slide="15">
         <span class="nav-item-number">10</span>
-        Questions
+        Clients
       </div>
       <div class="nav-item" data-slide="16">
         <span class="nav-item-number">11</span>
-        Processus
+        Implantation
       </div>
-      <div class="nav-item" data-slide="17">
+      <div class="nav-item" data-slide="18">
         <span class="nav-item-number">12</span>
+        Questions
+      </div>
+      <div class="nav-item" data-slide="19">
+        <span class="nav-item-number">13</span>
+        Mise en place
+      </div>
+      <div class="nav-item" data-slide="20">
+        <span class="nav-item-number">14</span>
         D&eacute;marrage
       </div>
     </div>
   </nav>
 
   <!-- Slide Counter -->
-  <div class="slide-counter"><span class="current">1</span>/18</div>
+  <div class="slide-counter"><span class="current">1</span>/21</div>
 
   <!-- Presentation -->
   <main class="presentation">
@@ -122,8 +130,7 @@
       <div class="layout-split">
         <div class="content-side">
           <h1 class="slide-title">
-            La p&eacute;nurie de m&eacute;decins du travail<br>
-            change la donne
+            La p&eacute;nurie de m&eacute;decins du travail change la donne
           </h1>
 
           <p class="content-paragraph">La plupart des organisations comptent sur les SPST pour planifier les visites. Mais les médecins du travail se raréfient, les délais s'allongent, et <strong>la responsabilité reste entièrement sur l'employeur.</strong></p>
@@ -274,8 +281,7 @@
     <section class="slide" data-chapter="monde-ideal">
       <div class="slide-inner">
         <h1 class="slide-title">
-          Ce que serait un suivi<br>
-          v&eacute;ritablement ma&icirc;tris&eacute;
+          Ce que serait un suivi v&eacute;ritablement ma&icirc;tris&eacute;
         </h1>
 
         <div class="three-columns">
@@ -364,7 +370,22 @@
           de diff&eacute;rent
         </h1>
 
-        <div class="feature-grid-5">
+        <style>
+          .slide.active .feature-grid-6 .feature-item:nth-child(6) { animation-delay: 0.65s; }
+        </style>
+
+        <div class="feature-grid-6">
+          <!-- Rattrapage (1er) -->
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i data-lucide="history"></i>
+            </div>
+            <div class="feature-content">
+              <h4>Rattrapage du retard</h4>
+              <p>R&eacute;sorption du retard existant en 3 phases, avant de maintenir la conformit&eacute; dans la dur&eacute;e</p>
+            </div>
+          </div>
+
           <!-- Attribut 1 -->
           <div class="feature-item">
             <div class="feature-icon">
@@ -427,7 +448,45 @@
       </div>
     </section>
 
-    <!-- SLIDE 7: VALUE DETAIL 1 - Planning unifi&eacute; et prioris&eacute; par risque -->
+    <!-- SLIDE 7: VALUE DETAIL - Rattrapage du retard (premier) -->
+    <section class="slide" data-chapter="valeur-rattrapage">
+      <div class="value-detail-layout">
+        <div class="value-detail-content">
+          <h2>Rattrapage du retard</h2>
+
+          <ul class="value-detail-list">
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Une cartographie du retard, par site et par type de visite
+            </li>
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Les visites en retard les plus à risque traitées d'abord
+            </li>
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Des créneaux SPST négociés en volume pour résorber vite
+            </li>
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Un retour à la conformité sans recréer de retard
+            </li>
+          </ul>
+        </div>
+
+        <div class="value-detail-visual">
+          <div class="value-image-container">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-rec-2.jpg" alt="Rattrapage des visites en retard">
+          </div>
+        </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE 8: VALUE DETAIL 1 - Planning unifi&eacute; et prioris&eacute; par risque -->
     <section class="slide" data-chapter="valeur-1">
       <div class="value-detail-layout">
         <div class="value-detail-content">
@@ -436,15 +495,15 @@
           <ul class="value-detail-list">
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Cartographie en temps r&eacute;el de toutes les &eacute;ch&eacute;ances par salari&eacute;, type de visite et site
+              Toutes vos échéances réunies, par salarié et par site
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Priorisation automatique par niveau de risque (SIR avant VIP)
+              Tous les types de visites suivis, de l'embauche au suivi renforcé
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Alertes email/SMS pour les salari&eacute;s et les r&eacute;f&eacute;rents RH
+              Les échéances priorisées automatiquement par niveau de risque
             </li>
           </ul>
         </div>
@@ -470,22 +529,26 @@
           <ul class="value-detail-list">
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              R&eacute;f&eacute;rentiel d'adh&eacute;sions par &eacute;tablissement (adh&eacute;sions, r&eacute;siliations, transferts)
+              Un seul interlocuteur pour tous vos SPST, partout en France
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Relances directes aupr&egrave;s des SPST et des salari&eacute;s
+              Vos adhésions, résiliations et transferts gérés pour vous
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Gestion des reports, no-shows et replanifications
+              Les rendez-vous pris, confirmés et relancés à votre place
+            </li>
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Vos salariés informés par email, SMS et notification
             </li>
           </ul>
         </div>
 
         <div class="value-detail-visual">
           <div class="value-image-container">
-            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Coordination multi-SPST">
+            <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-1.jpg" alt="Salarié informé de sa visite médicale">
           </div>
         </div>
       </div>
@@ -504,15 +567,15 @@
           <ul class="value-detail-list">
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Chaque avis d'aptitude collect&eacute;, dat&eacute; et archiv&eacute; conform&eacute;ment RGPD/HDS
+              Chaque avis d'aptitude collecté, daté et rattaché au salarié
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Historique complet par salari&eacute; : convocations envoy&eacute;es, visites r&eacute;alis&eacute;es, avis rendus
+              Un archivage sécurisé sur toute la durée requise
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Documentation prouvable de chaque visite r&eacute;alis&eacute;e
+              Une preuve accessible immédiatement en cas de contrôle
             </li>
           </ul>
         </div>
@@ -538,15 +601,15 @@
           <ul class="value-detail-list">
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Reporting consolid&eacute; multi-sites avec statut de chaque visite (&agrave; planifier, planifi&eacute;, pr&eacute;vu, cl&ocirc;tur&eacute;)
+              Votre taux de conformité, à jour en permanence
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Indicateurs de pilotage : taux de visites r&eacute;alis&eacute;es, replanifications, no-shows, respect des &eacute;ch&eacute;ances
+              Le statut de chaque visite, de la convocation à l'avis rendu
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Visibilit&eacute; par &eacute;tablissement, par type de visite et par niveau de risque (SIR, SIA, SIS)
+              Des indicateurs par site et par type de visite, prêts pour le CSE
             </li>
           </ul>
         </div>
@@ -572,15 +635,19 @@
           <ul class="value-detail-list">
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              V&eacute;rification syst&eacute;matique des factures avant paiement (coh&eacute;rence, doublons)
+              Chaque facture SPST vérifiée avant paiement
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Visibilit&eacute; par site, par SPST et par p&eacute;riode
+              Les doublons et écarts de cotisation détectés
             </li>
             <li>
               <i data-lucide="check" class="check-icon"></i>
-              Suivi de la cotisation per capita et des &eacute;carts
+              Vos factures SPST réglées à votre place
+            </li>
+            <li>
+              <i data-lucide="check" class="check-icon"></i>
+              Vos coûts suivis par site, par SPST et par période
             </li>
           </ul>
         </div>
@@ -590,6 +657,42 @@
             <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/10/vm-3.jpg" alt="Contr&ocirc;le des factures SPST">
           </div>
         </div>
+      </div>
+
+      <div class="company-logo">
+        <img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming">
+      </div>
+    </section>
+
+    <!-- SLIDE: INTEGRATION - Compatible ecosysteme RH (logos) -->
+    <section class="slide" data-chapter="integration">
+      <div class="slide-inner">
+        <h1 class="slide-title">Compatible avec votre écosystème RH</h1>
+
+        <style>
+          .vm-int-lead { max-width: 920px; margin: 0 auto 42px; text-align: center; font-size: 16px; line-height: 1.6; color: var(--text-gray); }
+          .vm-logos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; width: 100%; max-width: 940px; margin: 0 auto; }
+          .vm-logo { background: #fff; border: 1px solid var(--bg-subtle); border-radius: 14px; height: 96px; display: flex; align-items: center; justify-content: center; padding: 18px 26px; box-shadow: var(--shadow-sm); transition: box-shadow .3s ease; }
+          .vm-logo img { max-width: 100%; max-height: 44px; object-fit: contain; filter: grayscale(1); opacity: 0.6; transition: filter .3s ease, opacity .3s ease; }
+          .vm-logo:hover { box-shadow: var(--shadow-md); }
+          .vm-logo:hover img { filter: none; opacity: 1; }
+          .vm-int-note { text-align: center; font-size: 13px; color: var(--text-light); margin: 22px auto 0; }
+        </style>
+
+        <p class="vm-int-lead">Notre accompagnement s'intègre à votre SIRH existant. Extraction des effectifs, remontée des avis d'aptitude et reporting s'échangent via API, SFTP ou export Excel, sans développement spécifique pour vos équipes.</p>
+
+        <div class="vm-logos">
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/workday.svg" alt="Workday"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/adp.svg" alt="ADP"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/silae.svg" alt="Silae"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/payfit.png" alt="PayFit"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/sage.svg" alt="Sage"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/cegid.png" alt="Cegid"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/sap.svg" alt="SAP SuccessFactors"></div>
+          <div class="vm-logo"><img src="https://ayming-france.github.io/assets/imagery/visites-medicales/integrations/soprahr.svg" alt="Sopra HR"></div>
+        </div>
+
+        <p class="vm-int-note">... et les principaux SIRH et logiciels de paie du marché.</p>
       </div>
 
       <div class="company-logo">
@@ -686,6 +789,134 @@
       </div>
     </section>
 
+    <!-- SLIDE: CLIENTS PAR SECTEUR -->
+    <section class="slide" data-chapter="clients">
+      <div class="slide-inner">
+        <h1 class="slide-title">Plus de 2 500 clients nous font confiance</h1>
+        <style>
+          .clients-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px 15px; width:100%; max-width:1060px; margin:0 auto; }
+          .client-sector { border:1px solid var(--bg-subtle); border-radius:11px; padding:9px 12px; background:#fff; box-shadow:var(--shadow-sm); }
+          .client-sector h4 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--blue-dark); text-align:center; margin:0 0 8px; padding-bottom:6px; border-bottom:2px solid var(--overlay-blue-soft); }
+          .client-logos { display:grid; grid-template-columns:repeat(3,1fr); gap:9px 6px; align-items:center; }
+          .client-logos img { max-width:100%; max-height:22px; object-fit:contain; filter:grayscale(1); opacity:0.72; display:block; margin:0 auto; }
+        </style>
+        <div class="clients-grid">
+          <div class="client-sector">
+            <h4>Agroalimentaire</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/bonduelle.svg" alt="bonduelle">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/andros.png" alt="andros">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/unilever.svg" alt="unilever">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/lindt.svg" alt="lindt">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/haribo.svg" alt="haribo">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/marie-brizard.svg" alt="marie-brizard">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/cooperl.png" alt="cooperl">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/terrena.png" alt="terrena">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Distribution & Commerce</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/intermarche.svg" alt="intermarche">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/systeme-u.svg" alt="systeme-u">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/leclerc.svg" alt="leclerc">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/casino.svg" alt="casino">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/sodexo.svg" alt="sodexo">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/accor.svg" alt="accor">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/loreal.svg" alt="loreal">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/lvmh.svg" alt="lvmh">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/ikea.svg" alt="ikea">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Industrie</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/seb.svg" alt="seb">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/engie.svg" alt="engie">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/edf.svg" alt="edf">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/legrand.svg" alt="legrand">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/nexans.svg" alt="nexans">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/arcelormittal.svg" alt="arcelormittal">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/knauf.svg" alt="knauf">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/mersen.svg" alt="mersen">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>BTP & Construction</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/vinci.svg" alt="vinci">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/bouygues.svg" alt="bouygues">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/eiffage.svg" alt="eiffage">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/fayat.png" alt="fayat">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/nge.svg" alt="nge">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/spie-batignolles.svg" alt="spie-batignolles">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/otis.svg" alt="otis">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Transport & Logistique</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/transdev.svg" alt="transdev">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/sncf.svg" alt="sncf">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/cmacgm.svg" alt="cmacgm">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/jacky-perrenot.png" alt="jacky-perrenot">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/gls.svg" alt="gls">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Santé & Pharma</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/pierre-fabre.png" alt="pierre-fabre">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/vivalto.png" alt="vivalto">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/baxter.svg" alt="baxter">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/virbac.svg" alt="virbac">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/delpharm.png" alt="delpharm">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/gsk.png" alt="gsk">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/elsan.png" alt="elsan">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Services & Finance</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/veolia.svg" alt="veolia">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/suez.svg" alt="suez">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/bnp.svg" alt="bnp">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/credit-agricole.svg" alt="credit-agricole">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/credit-mutuel.svg" alt="credit-mutuel">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/cdc.svg" alt="cdc">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/laposte.svg" alt="laposte">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/groupama.svg" alt="groupama">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/covea.png" alt="covea">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Technologies & Médias</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/thales.svg" alt="thales">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/orange.svg" alt="orange">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/m6.svg" alt="m6">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/lemonde.svg" alt="lemonde">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/solocal.svg" alt="solocal">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/sqli.png" alt="sqli">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/squad.svg" alt="squad">
+            </div>
+          </div>
+          <div class="client-sector">
+            <h4>Public & ESS</h4>
+            <div class="client-logos">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/omnes.svg" alt="omnes">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/urssaf.svg" alt="urssaf">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/upjv.png" alt="upjv">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/oppbtp.png" alt="oppbtp">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/aftral.svg" alt="aftral">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/min-culture.png" alt="min-culture">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="company-logo"><img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming"></div>
+    </section>
+
     <!-- SLIDE 14: IMPLANTATION -->
     <section class="slide" data-chapter="implantation">
       <div class="slide-inner">
@@ -753,37 +984,49 @@
       </div>
     </section>
 
-    <!-- SLIDE 16: PROCESSUS -->
-    <section class="slide" data-chapter="processus">
+    <!-- SLIDE 16: MISE EN PLACE - Demarrage en 5 etapes (prochaines etapes) -->
+    <section class="slide" data-chapter="mise-en-place">
       <div class="slide-inner">
-        <h1 class="slide-title">
-          Comment d&eacute;marrer
-        </h1>
+        <h1 class="slide-title">Un démarrage pris en main, étape par étape</h1>
 
-        <div class="process-timeline">
-          <div class="process-step">
-            <div class="step-number">1</div>
-            <div class="step-title">Diagnostic gratuit</div>
-            <div class="step-duration">2 semaines</div>
-            <div class="step-description">Analyse de votre situation actuelle, nombre de sites, SPST, volumes et taux de conformit&eacute; estim&eacute;</div>
+        <style>
+          .vm-intro-lead { max-width: 940px; margin: 0 auto 40px; text-align: center; font-size: 17px; line-height: 1.6; color: var(--text-gray); }
+          .vm-steps { display: flex; gap: 32px; width: 100%; max-width: 1160px; margin: 0 auto; align-items: flex-start; }
+          .vm-step { flex: 1; text-align: center; position: relative; }
+          .vm-step-num { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-brand-horizontal); color: #fff; font-size: 24px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; box-shadow: var(--shadow-md); }
+          .vm-step h4 { font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; line-height: 1.25; }
+          .vm-step p { font-size: 12.5px; color: var(--text-gray); line-height: 1.5; }
+          .vm-step::after { content: '\2192'; position: absolute; top: 20px; right: -22px; font-size: 20px; color: var(--blue-primary); opacity: 0.4; }
+          .vm-step:last-child::after { display: none; }
+        </style>
+
+        <p class="vm-intro-lead">Une équipe dédiée pilote la mise en place et Ayming Checkup centralise le suivi : l'alliance d'un accompagnement humain et d'une plateforme. Vos équipes RH n'ont rien à gérer en interne.</p>
+
+        <div class="vm-steps">
+          <div class="vm-step">
+            <div class="vm-step-num">1</div>
+            <h4>Cartographie des adhésions</h4>
+            <p>Nous recensons vos adhésions SPST par établissement et validons le périmètre.</p>
           </div>
-
-          <span class="step-arrow">&rarr;</span>
-
-          <div class="process-step">
-            <div class="step-number">2</div>
-            <div class="step-title">Proposition sur-mesure</div>
-            <div class="step-duration">+1 semaine</div>
-            <div class="step-description">Plan personnalis&eacute; avec p&eacute;rim&egrave;tre, planning et tarification adapt&eacute;s</div>
+          <div class="vm-step">
+            <div class="vm-step-num">2</div>
+            <h4>Règles de communication</h4>
+            <p>Convocations et relances personnalisées par type de visite et par site.</p>
           </div>
-
-          <span class="step-arrow">&rarr;</span>
-
-          <div class="process-step">
-            <div class="step-number">3</div>
-            <div class="step-title">D&eacute;ploiement progressif</div>
-            <div class="step-duration">Selon planning</div>
-            <div class="step-description">Pilote sur un p&eacute;rim&egrave;tre restreint, puis extension &agrave; l'ensemble du groupe</div>
+          <div class="vm-step">
+            <div class="vm-step-num">3</div>
+            <h4>Transfert sécurisé des données</h4>
+            <p>Extraction SIRH des effectifs, transmise via des canaux sécurisés (RGPD / HDS).</p>
+          </div>
+          <div class="vm-step">
+            <div class="vm-step-num">4</div>
+            <h4>Mise en place du pilotage</h4>
+            <p>Coordination des SPST, contrôle des factures, suivi des avis d'aptitude.</p>
+          </div>
+          <div class="vm-step">
+            <div class="vm-step-num">5</div>
+            <h4>Prise en main d'Ayming Checkup</h4>
+            <p>Démonstration en live de votre tableau de bord de conformité.</p>
           </div>
         </div>
       </div>
