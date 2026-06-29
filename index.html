@@ -775,14 +775,15 @@
         <h1 class="slide-title">Plus de 2 500 clients nous font confiance</h1>
         <style>
           .clients-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px 15px; width:100%; max-width:1060px; margin:0 auto; }
-          .client-sector { border:1px solid var(--bg-subtle); border-radius:11px; padding:0 12px 10px; background:#fff; box-shadow:var(--shadow-sm); overflow:hidden; }
+          .client-sector { display:flex; flex-direction:column; border:1px solid var(--bg-subtle); border-radius:11px; padding:0 12px 10px; background:#fff; box-shadow:var(--shadow-sm); overflow:hidden; }
           .client-sector h4 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#fff; text-align:center; margin:0 -12px 10px; padding:7px 10px; background:var(--gradient-brand-horizontal); }
-          .client-logos { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; align-content:flex-start; gap:10px 8px; }
+          .client-logos { flex:1 1 auto; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; align-content:center; gap:12px 8px; }
           /* 3 per row; an incomplete last row stays centered (rule works for any count) */
           .client-logos img { flex:0 0 calc(33.333% - 8px); max-width:calc(33.333% - 8px); min-width:0; height:27px; object-fit:contain; display:block; }
           /* normalise optical weight: trim wide wordmarks, boost compact emblems */
           .client-logos img.lg-trim { height:21px; }
           .client-logos img.lg-boost { height:34px; }
+          .client-logos img.lg-xl { height:46px; }
         </style>
         <div class="clients-grid">
           <div class="client-sector">
@@ -886,10 +887,10 @@
             <h4>Public & ESS</h4>
             <div class="client-logos">
               <img src="https://ayming-france.github.io/assets/imagery/clients/omnes.svg" alt="omnes">
-              <img src="https://ayming-france.github.io/assets/imagery/clients/upjv.png" alt="upjv">
-              <img src="https://ayming-france.github.io/assets/imagery/clients/oppbtp.png" alt="oppbtp">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/upjv.png" alt="upjv" class="lg-boost">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/oppbtp.png" alt="oppbtp" class="lg-boost">
               <img src="https://ayming-france.github.io/assets/imagery/clients/aftral.svg" alt="aftral">
-              <img src="https://ayming-france.github.io/assets/imagery/clients/min-culture.png" alt="min-culture">
+              <img src="https://ayming-france.github.io/assets/imagery/clients/min-culture.png" alt="min-culture" class="lg-xl">
             </div>
           </div>
         </div>
