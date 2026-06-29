@@ -774,13 +774,13 @@
       <div class="slide-inner">
         <h1 class="slide-title">Plus de 2 500 clients nous font confiance</h1>
         <style>
-          .clients-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px 15px; width:100%; max-width:1060px; margin:0 auto; }
+          .clients-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px 15px; width:100%; max-width:1140px; margin:0 auto; }
           .client-sector { display:flex; flex-direction:column; border:1px solid var(--bg-subtle); border-radius:11px; padding:0 12px 10px; background:#fff; box-shadow:var(--shadow-sm); overflow:hidden; }
           .client-sector h4 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#fff; text-align:center; margin:0 -12px 10px; padding:7px 10px; background:var(--gradient-brand-horizontal); }
-          .client-logos { flex:1 1 auto; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; align-content:center; gap:12px 8px; }
-          /* 3 per row; incomplete last row stays centered; rows centered vertically in the card */
-          /* Height is set per-logo by the equal-optical-area sizer (script below); 27px is a pre-JS fallback. */
-          .client-logos img { flex:0 0 calc(33.333% - 8px); max-width:calc(33.333% - 8px); min-width:0; height:27px; object-fit:contain; display:block; }
+          .client-logos { flex:1 1 auto; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; align-content:center; gap:16px 18px; }
+          /* Logo-wall pattern: every logo at the SAME height, width flows by aspect, wraps + centers.
+             Uniform height = uniform visual scale; each logo fills its natural footprint. No per-logo tuning. */
+          .client-logos img { height:34px; width:auto; max-width:100%; object-fit:contain; display:block; }
         </style>
         <div class="clients-grid">
           <div class="client-sector">
@@ -892,25 +892,6 @@
           </div>
         </div>
       </div>
-      <script>
-        (function(){
-          /* Equal optical-area logo sizing: a square emblem renders taller than a wide
-             wordmark so every logo reads at the same visual weight. height = BASE / sqrt(aspect),
-             clamped. One rule for all logos, no per-logo tuning. */
-          var BASE = 29, MIN = 20, MAX = 36;
-          function sizeLogo(img){
-            var w = img.naturalWidth, h = img.naturalHeight;
-            if(!w || !h) return;
-            var hpx = Math.max(MIN, Math.min(MAX, BASE / Math.sqrt(w / h)));
-            img.style.height = hpx.toFixed(1) + 'px';
-          }
-          document.querySelectorAll('.client-logos img').forEach(function(img){
-            if(img.complete && img.naturalWidth) sizeLogo(img);
-            img.addEventListener('load', function(){ sizeLogo(img); });
-          });
-        })();
-      </script>
-
       <div class="company-logo"><img src="https://www.ayming.fr/wp-content/uploads/sites/3/2025/07/Ayming.png" alt="Ayming"></div>
     </section>
 
