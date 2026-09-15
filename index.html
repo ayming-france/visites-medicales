@@ -8,6 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://ayming-france.github.io/assets/engine/slides.css">
   <style>
+    .col-approche { width: 20%; }
+    .col-avantages { width: 40%; }
+    .col-inconvenients { width: 40%; }
+    .ancrage-title { text-align: left; margin-bottom: var(--space-28); }
     .testimonial-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -16,7 +20,7 @@
       max-width: 900px;
       perspective: 1000px;
     }
-      .next-step { margin-top: var(--space-34); padding: var(--space-18) var(--space-26); border-radius: var(--radius-14); background: linear-gradient(90deg, rgba(15,167,226,0.10), rgba(10,179,140,0.10)); border: 1px solid rgba(17,169,230,0.35); font-size: var(--font-18); font-weight: var(--weight-bold); color: var(--blue-dark); text-align: center; }
+      .next-step { margin-top: var(--space-34); padding: var(--space-18) var(--space-26); border-radius: var(--radius-14); background: linear-gradient(90deg, rgba(var(--blue-primary-rgb), 0.10), rgba(var(--gradient-green-end-rgb), 0.10)); border: 1px solid rgba(var(--blue-primary-rgb), 0.35); font-size: var(--font-18); font-weight: var(--weight-bold); color: var(--blue-dark); text-align: center; }
   </style>
 </head>
 <body data-audience="client">
@@ -211,9 +215,9 @@
           <table class="comparison-table">
             <thead>
               <tr>
-                <th style="width: 20%;">Approche</th>
-                <th style="width: 40%;">Avantages</th>
-                <th style="width: 40%;">Inconv&eacute;nients</th>
+                <th class="col-approche">Approche</th>
+                <th class="col-avantages">Avantages</th>
+                <th class="col-inconvenients">Inconv&eacute;nients</th>
               </tr>
             </thead>
             <tbody>
@@ -778,7 +782,7 @@
       <div class="slide-inner">
         <div class="ancrage-layout">
           <div class="ancrage-text">
-            <h1 class="slide-title" style="text-align: left; margin-bottom: 28px;">Un fort ancrage <strong>en France</strong>...</h1>
+            <h1 class="slide-title ancrage-title">Un fort ancrage <strong>en France</strong>...</h1>
             <p>Nos &eacute;quipes locales accompagnent au quotidien nos clients dans leur d&eacute;veloppement et leurs transformations <strong>en s'appuyant sur un &eacute;cosyst&egrave;me de professionnels en r&eacute;gions</strong> :</p>
             <p>experts scientifiques, experts comptables, &eacute;tablissements bancaires, p&ocirc;les de comp&eacute;titivit&eacute;, f&eacute;d&eacute;rations professionnelles, avec un maillage de cabinets d'avocats et de m&eacute;decins ind&eacute;pendants.</p>
           </div>
